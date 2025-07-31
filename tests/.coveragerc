@@ -1,0 +1,5 @@
+[run]
+omit =
+    */iotdb/dbapi/*
+    */iotdb/sqlalchemy/*
+    */iotdb/thrift/*
