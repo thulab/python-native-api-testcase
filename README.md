@@ -1,4 +1,4 @@
-# 自动化测试使用说明
+# Python 原生接口测试工具使用说明
 
 ----
 
@@ -10,7 +10,7 @@
 
 ## 安装
 
-**仅限首次安装需要**
+**仅限首次安装需要，确保python环境已经配置好**
 
 1、创建虚拟环境并激活
 
@@ -47,15 +47,12 @@ pip3 install ${iotdb}/iotdb-client/client-py/dist/apache_iotdb-*.dev0-py3-none-a
 
 ## 使用
 
+确认config配置文件正确：`${python-native-api-testcase}/config.yml`
+
 - 基础自动化测试
 
 ```bash
-# 1、确认config配置文件：${python-native-api-testcase}/config.yml
-
-# 2、移到测试目录下
 cd ${python-client-test}/tests
-
-# 4、执行测试
 pytest
 ```
 
@@ -64,13 +61,15 @@ pytest
 - 代码覆盖率测试
 
 ```bash
-# 1、在Linux下执行脚本收集要测量覆盖率的目录：${iotdb}/iotdb-client/client-py/iotdb
-
-# 2、收集的源码目录（iotdb）放到测试程序根目录下
-
-# 3、移到测试目录下，执行命令进行代码覆盖率测试并生成报告文件
 cd ${python-client-test}/test
-pytest --cov=iotdb --cov-report=html --cov-branch
+pytest --cov=iotdb --cov-report=html --cov-branch --cov-config=.coveragerc
 ```
 
 生成的报告默认位于程序根目录下`test/htmlcov/`中的index.html 文件
+
+参数说明
+
+- --cov ：指定覆盖率测试目标源码目录（目前会自动取venv依赖库里面的iotdb：venv\Lib\site-packages\iotdb）
+- --cov-report：指定覆盖率报告文件格式
+- --cov-branch：启用分支测试
+- --cov-config：指定覆盖率测试配置文件
