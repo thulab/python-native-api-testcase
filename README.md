@@ -40,7 +40,7 @@ git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
 # 2、安装需要的模块
 pip3 install build
-# 3、编译前确保 maven 和 python3 可用
+# 3、编译
 ./release.sh
 # 4、引入依赖
 cd ${python-native-api-testcase}
