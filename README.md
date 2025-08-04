@@ -38,7 +38,7 @@ pip3 install pytest-html # 生成测试报告需要的
 # 1、拉取源码
 git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
-# 2、安装需要的模块（仅限首次需要）
+# 2、安装需要的模块
 pip3 install build
 # 3、编译前确保 maven 和 python3 可用
 ./release.sh
