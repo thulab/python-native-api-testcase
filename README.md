@@ -15,8 +15,11 @@
 1、创建虚拟环境并激活
 
 ```bash
-python -m venv venv
+python3 -m venv venv
+# Windows
 .\venv\Scripts\activate
+# linux
+source venv/bin/activate
 ```
 
 2、安装需要的依赖
