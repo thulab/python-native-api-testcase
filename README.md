@@ -35,7 +35,7 @@ pip3 install pytest-html # 生成测试报告需要的
 3、安装IoTDB依赖
 
 ```bash
-# 1、拉取源码（已拉取过的只需 git pull 更新下）
+# 1、拉取源码
 git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
 # 2、安装需要的模块（仅限首次需要）
