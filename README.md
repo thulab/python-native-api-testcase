@@ -29,6 +29,7 @@ pip3 install numpy # Example源码需要的依赖
 pip3 install pytest # 使用自动化测试需要的
 pip3 install pyyaml # 使用yaml配置文件需要的
 pip3 install pytest-cov # 测试代码覆盖率需要的
+pip3 install pytest-html # 生成测试报告需要的
 ```
 
 3、安装IoTDB依赖
