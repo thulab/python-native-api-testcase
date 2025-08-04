@@ -39,7 +39,6 @@ git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
 # 2、安装需要的模块（仅限首次需要）
 pip3 install build
-pip3 install thrift
 # 3、编译前确保 maven 和 python3 可用
 ./release.sh
 # 4、引入依赖
