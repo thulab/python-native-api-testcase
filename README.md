@@ -74,7 +74,7 @@ pytest --cov=iotdb --cov-report=html --cov-branch --cov-config=.coveragerc
 
 参数说明
 
-- --cov ：指定覆盖率测试目标源码目录（目前会自动取venv依赖库里面的iotdb：venv\Lib\site-packages\iotdb）
+- --cov：指定覆盖率测试目标源码目录（目前会自动取venv依赖库里面的iotdb：venv\Lib\site-packages\iotdb）
 - --cov-report：指定覆盖率报告文件格式
 - --cov-branch：启用分支测试
 - --cov-config：指定覆盖率测试配置文件
