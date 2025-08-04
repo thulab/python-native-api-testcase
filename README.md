@@ -57,6 +57,8 @@ pip3 install ${iotdb}/iotdb-client/client-py/dist/apache_iotdb-*.dev0-py3-none-a
 ```bash
 cd ${python-client-test}/tests
 pytest
+# 生成测试报告
+pytest --html=report.html
 ```
 
 **注意：测试用例文件必须以test结尾，方法必须以test开头**
