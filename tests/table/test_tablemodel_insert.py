@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import pytest
 import yaml
@@ -13,8 +15,8 @@ from iotdb.utils.NumpyTablet import NumpyTablet
 from datetime import date
 
 """
- Title：测试表模型python写入接口—正常情况
- Describe：基于表模型版本，测试各种写入接口
+ Title：测试表模型python写入接口
+ Describe：测试各种写入接口
  Author：肖林捷
  Date：2025/1/7
 """
@@ -160,7 +162,7 @@ def fixture_():
 
 # 测试一般写入数据
 @pytest.mark.usefixtures('fixture_')
-def test_insert_relational_tablet():
+def test_insert1():
     global session
     # 1、一般写入
     expect = 10
@@ -324,7 +326,7 @@ def test_insert_relational_tablet():
 
 # 测试Numpy_tablet写入数据
 @pytest.mark.usefixtures('fixture_')
-def test_insert_relational_Numpy_tablet():
+def test_insert2():
     global session
     # 1、不使用bitmap
     expect = 10
@@ -478,7 +480,7 @@ def test_insert_relational_Numpy_tablet():
 
 # 测试直接写入数据
 @pytest.mark.usefixtures('fixture_')
-def test_insert_relational_tablet_direct():
+def test_insert3():
     global session
     for i in range(1, 10):
         table_name = "t" + str(i)
@@ -556,3 +558,81 @@ def test_insert_relational_tablet_direct():
         tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
         session.insert(tablet)
     # 测试一般写入数据
+
+
+# 乱序写入：测试时间戳自动排序功能
+@pytest.mark.usefixtures('fixture_')
+def test_insert4():
+    global session
+    table_name = "table_b"
+    column_names = [
+        "id1", "id2", "id3",
+        "attr1", "attr2", "attr3",
+        "BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TIMESTAMP", "DATE", "BLOB", "STRING"
+    ]
+    data_types = [
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT,
+        TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING
+    ]
+    column_types = [
+        ColumnType.TAG, ColumnType.TAG, ColumnType.TAG,
+        ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD
+    ]
+
+    # 乱序的时间戳和对应的值
+    timestamps = []
+    values = []
+    for num in range(100):
+        timestamps.append(random.randint(-10000, 10000))
+        values.append(["id1：" + str(num), "id2：" + str(num), "id3：" + str(num),
+            "attr1:" + str(num), "attr2:" + str(num), "attr3:" + str(num),
+            False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"])
+
+
+    # 创建 Tablet 实例
+    tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
+    session.insert(tablet)
+
+
+# 错误情况：时间戳长度和值长度不一致
+@pytest.mark.usefixtures('fixture_')
+def test_insert_error1():
+    global session
+    # 1、一般写入
+    table_name = "table_b"
+    column_names = [
+        "id1", "id2", "id3",
+        "attr1", "attr2", "attr3",
+        "BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TIMESTAMP", "DATE", "BLOB", "STRING"]
+    data_types = [
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT,
+        TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+    column_types = [
+        ColumnType.TAG, ColumnType.TAG, ColumnType.TAG,
+        ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD]
+    timestamps = []
+    values = []
+    for row_a in range(10):
+        timestamps.append(row_a)
+    for row_b in range(1):
+        values.append([
+            "id1：" + str(row_b), "id2：" + str(row_b), "id3：" + str(row_b),
+            "attr1:" + str(row_b), "attr2:" + str(row_b), "attr3:" + str(row_b),
+            False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"])
+    try:
+        Tablet(table_name, column_names, data_types, values, timestamps, column_types)
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, RuntimeError) and str(e) == "Input error! len(timestamps) does not equal to len(values)!", "期待报错信息与实际不一致，期待：RuntimeError：Input error! len(timestamps) does not equal to len(values)!，实际：" + type(e).__name__ + ":" + str(e)
+
+
+
+

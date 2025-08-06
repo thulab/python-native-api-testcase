@@ -11,6 +11,7 @@ from iotdb.utils.IoTDBConstants import TSDataType
 from iotdb.utils.Tablet import Tablet, ColumnType
 from iotdb.utils.NumpyTablet import NumpyTablet
 from datetime import date
+from iotdb.utils.Field import Field
 
 """
  Title：测试表模型python查询接口—正常情况
@@ -185,14 +186,13 @@ def fixture_():
     session.close()
 
 
-# 测试查询
+# 测试查询：fields查询
 @pytest.mark.usefixtures('fixture_')
-def test_query():
+def test_query1():
     expect = 10
     actual = 0
     with session.execute_query_statement("select id1,id2,id3,attr1,attr2,attr3,BOOLEAN,INT32,INT64,FLOAT,DOUBLE,TEXT,DATE,TIMESTAMP,BLOB,STRING from table_b") as session_data_set:
-        print(session_data_set.get_column_names())
-        print(session_data_set.get_column_types())
+        session_data_set.get_column_names()
         session_data_set.get_column_types()
         while session_data_set.has_next():
             row_record = session_data_set.next()
@@ -245,3 +245,58 @@ def test_query():
 
         assert expect == actual, "Actual number of rows does not match, expected:" + str(expect) + ", actual:" + str(
             actual)
+
+
+# 测试查询：fields查询，get_XXX_value异常情况
+@pytest.mark.usefixtures('fixture_')
+def test_query_error1():
+    field = Field(None, None)
+    try:
+        field.get_bool_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_int_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_long_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_float_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_double_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    field.get_string_value()
+
+    try:
+        field.get_date_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_timestamp_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
+
+    try:
+        field.get_binary_value()
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, Exception) and str(e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(e).__name__ + ":" + str(e)
