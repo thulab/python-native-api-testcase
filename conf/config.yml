@@ -1,6 +1,6 @@
 # 基础配置
-enable_cluster: false
-enable_session_pool: false
+enable_cluster: False
+enable_session_pool: False
 # 单机节点配置
 host: "127.0.0.1"
 port: "6667"
@@ -11,7 +11,11 @@ node_urls:
   - "127.0.0.1:6667"
   - "127.0.0.1:6668"
   - "127.0.0.1:6669"
-# ssl配置
-enable_thrift_ssl: false
-use_ssl: false
-ca_certs: ca_cert.pem
+# ssl测试配置
+enable_thrift_ssl: False
+use_ssl: False
+ca_certs: "ca_cert.pem"
+# RPC压缩配置
+enable_compression: False
+# 连接超时时间配置
+connection_timeout_in_ms: 10000

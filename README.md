@@ -57,24 +57,26 @@ pip3 install ${iotdb}/iotdb-client/client-py/dist/apache_iotdb-*.dev0-py3-none-a
 ```bash
 cd ${python-client-test}/tests
 pytest
-# 生成测试报告：默认生成在当前目录下
+# 生成测试报告
 pytest --html=report.html
 ```
+
+生成的报告默认位于程序根目录下`test/`中的report.html 文件，需要指定生成位置和文件名可以更改：`--html=[路径][文件名].html`，如`--html=../test-report/report.html`
 
 **注意：测试用例文件必须以test结尾，方法必须以test开头**
 
 - 代码覆盖率测试
 
 ```bash
-cd ${python-client-test}/test
+cd ${python-client-test}/tests
 pytest --cov=iotdb --cov-report=html --cov-branch --cov-config=.coveragerc
 ```
 
-生成的报告默认位于程序根目录下`test/htmlcov/`中的index.html 文件
+生成的报告默认位于程序根目录下`test/htmlcov/`中的index.html 文件，需要指定生成位置可以更改：`--cov-report=html:路径`，如`--cov-report=html:../cov-report`
 
 参数说明
 
-- --cov：指定覆盖率测试目标源码目录（目前会自动取venv依赖库里面的iotdb：venv\Lib\site-packages\iotdb）
+- --cov：指定覆盖率测试目标源码目录（会自动取venv依赖库里面的iotdb：Lib\site-packages\iotdb）
 - --cov-report：指定覆盖率报告文件格式
 - --cov-branch：启用分支测试
 - --cov-config：指定覆盖率测试配置文件
