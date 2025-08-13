@@ -1,5 +1,4 @@
 import datetime
-import random
 import pytest
 import yaml
 from iotdb.table_session import TableSession, TableSessionConfig
@@ -7,8 +6,9 @@ from iotdb.utils.IoTDBConstants import TSDataType
 from iotdb.utils.Tablet import Tablet, ColumnType
 from datetime import date
 from iotdb.utils.Field import Field
+from iotdb.utils.exception import StatementExecutionException
 
-session = None
+session = TableSession(TableSessionConfig())
 
 """
  Title：测试表模型查询接口
@@ -43,7 +43,6 @@ def read_config(file_path):
 def get_session_():
     global session
     with open('../conf/config.yml', 'r', encoding='utf-8') as file:
-    # with open('../../conf/config.yml', 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     if config['enable_cluster']:
@@ -395,7 +394,10 @@ def test_fields3():
 
             row_index = row_index + 1
 
-# 4、测试fields查询，get_XXX_value异常情况
+
+################## 异常情况 ##################
+
+# 1、测试fields查询，get_XXX_value异常情况
 @pytest.mark.usefixtures('fixture_')
 def test_fields_error1():
     field = Field(None, None)
@@ -464,3 +466,12 @@ def test_fields_error1():
         assert isinstance(e, Exception) and str(
             e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(
             e).__name__ + ":" + str(e)
+
+# 2、StatementExecutionException异常
+@pytest.mark.usefixtures('fixture_')
+def test_query_error2():
+    try:
+        session.execute_query_statement("StatementExecutionException")
+        assert False, "期待报错，实际无报错"
+    except Exception as e:
+        assert isinstance(e, StatementExecutionException) and "StatementExecutionException" in str(e), "期待报错信息与实际不一致，期待：StatementExecutionException: ，实际：" + type(e).__name__ + ":" + str(e)

@@ -308,3 +308,19 @@ def test_session7():
     # 关闭 session
     for i in range(100):
         session.close()
+
+################## 异常情况 ##################
+
+# 1、IoTDBConnectionException异常：未实现
+@pytest.mark.usefixtures('fixture_')
+def test_session_error1():
+    config = TableSessionConfig(
+        node_urls=[f"0.0.0.0:6667"],
+    )
+    # 验证有效性
+    try:
+        TableSession(config)
+        assert False, "期望报错信息与实际不一致，期待：IoTDBConnectionException异常，实际无异常"
+    except Exception as e:
+        assert isinstance(e, IoTDBConnectionException), "期望报错信息与实际不一致，期待：IoTDBConnectionException异常，实际：" + str(e)
+

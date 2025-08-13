@@ -21,7 +21,7 @@ from datetime import date
  Date：2025/1/7
 """
 
-session = None
+session = TableSession(TableSessionConfig())
 
 
 def read_config(file_path):
