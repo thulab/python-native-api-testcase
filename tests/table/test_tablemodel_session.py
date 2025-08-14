@@ -192,7 +192,7 @@ def test_session2():
         password=config['password'],
         database=database_name,
         fetch_size=5000,
-        time_zone=Session.DEFAULT_ZONE_ID,
+        time_zone="Asia/Shanghai",
         enable_redirection=True,
         enable_compression=False,
         use_ssl=False,
@@ -315,11 +315,11 @@ def test_session7():
 @pytest.mark.usefixtures('fixture_')
 def test_session_error1():
     config = TableSessionConfig(
-        node_urls=[f"0.0.0.0:6667"],
+        node_urls=[f"192.0.2.0:6667"],
     )
-    # 验证有效性
     try:
-        TableSession(config)
+        session = TableSession(config)
+        session.execute_query_statement("SHOW DATABASES")
         assert False, "期望报错信息与实际不一致，期待：IoTDBConnectionException异常，实际无异常"
     except Exception as e:
         assert isinstance(e, IoTDBConnectionException), "期望报错信息与实际不一致，期待：IoTDBConnectionException异常，实际：" + str(e)

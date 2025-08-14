@@ -17,20 +17,10 @@ session = TableSession(TableSessionConfig())
  Date：2025/1/7
 """
 
-column_names = [
-    "id1", "id2", "id3",
-    "attr1", "attr2", "attr3",
-    "BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TIMESTAMP", "DATE", "BLOB", "STRING"]
-data_types = [
-    TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
-    TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
-    TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT,
-    TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
-column_types = [
-    ColumnType.TAG, ColumnType.TAG, ColumnType.TAG,
-    ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE,
-    ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD,
-    ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD]
+# 全局变量
+column_names = []
+data_types = []
+column_types = []
 timestamps = []
 values = []
 
@@ -78,77 +68,88 @@ def create_table(session):
 
 
 def insert_data(session):
+    global column_names, data_types, column_types, timestamps, values
     # 1、一般写入
     table_name = "table_b"
-    for row in range(10):
-        timestamps.append(row)
-    values.append([
-        "id1：1", "id2：1",
-        "id3：1",
-        "attr1:1", "attr2:1",
-        "attr3:1",
-        False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"])
-    values.append([
-        "id1：2", "id2：2",
-        "id3：2",
-        "attr1:2", "attr2:2",
-        "attr3:2",
-        True, -2147483648, -9223372036854775808, -0.12345678, -0.12345678901234567, "abcdefghijklmnopqrstuvwsyz",
-        -9223372036854775808, date(1000, 1, 1), 'abcdefghijklmnopqrstuvwsyz'.encode('utf-8'),
-        "abcdefghijklmnopqrstuvwsyz"])
-    values.append([
-        "id1：3", "id2：3",
-        "id3：3",
-        "attr1:3", "attr2:3",
-        "attr3:3",
-        True, 2147483647, 9223372036854775807, 0.123456789, 0.12345678901234567, "!@#$%^&*()_+}{|:'`~-=[];,./<>?~",
-        9223372036854775807, date(9999, 12, 31), '!@#$%^&*()_+}{|:`~-=[];,./<>?~'.encode('utf-8'),
-        "!@#$%^&*()_+}{|:`~-=[];,./<>?~"])
-    values.append([
-        "id1：4", "id2：4",
-        "id3：4",
-        "attr1:4", "attr2:4",
-        "attr3:4",
-        True, 1, 1, 1.0, 1.0, "没问题", 1, date(1970, 1, 1), '没问题'.encode('utf-8'), "没问题"])
-    values.append([
-        "id1：5", "id2：5",
-        "id3：5",
-        "attr1:5", "attr2:5",
-        "attr3:5",
-        True, -1, -1, 1.1234567, 1.1234567890123456, "！@#￥%……&*（）——|：“《》？·【】、；‘，。/", 11, date(1970, 1, 1),
-        '！@#￥%……&*（）——|：“《》？·【】、；‘，。/'.encode('utf-8'), "！@#￥%……&*（）——|：“《》？·【】、；‘，。/"])
-    values.append([
-        "id1：6", "id2：6",
-        "id3：6",
-        "attr1:6", "attr2:6",
-        "attr3:6",
-        True, 10, 11, 4.123456, 4.123456789012345,
-        "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:'`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题", 11,
-        date(1970, 1, 1),
-        '1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题'.encode(
-            'utf-8'),
-        "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题"])
-    values.append([
-        "id1：7", "id2：7",
-        "id3：7",
-        "attr1:7", "attr2:7",
-        "attr3:7",
-        True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'),
-        "string01"])
-    values.append([
-        "id1：8", "id2：8",
-        "id3：8",
-        "attr1:8", "attr2:8",
-        "attr3:8",
-        None, None, None, None, None, None, None, None, None, None])
-    values.append([
-        None, None, None,
-        None, None, None,
-        True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "])
-    values.append([
-        None, None, None,
-        None, None, None,
-        None, None, None, None, None, None, None, None, None, None])
+    column_names = [
+        "id1", "id2", "id3",
+        "attr1", "attr2", "attr3",
+        "BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TIMESTAMP", "DATE", "BLOB", "STRING"]
+    data_types = [
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT,
+        TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+    column_types = [
+        ColumnType.TAG, ColumnType.TAG, ColumnType.TAG,
+        ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD]
+    timestamps = [-9223372036854775808, -2147483648, -10000, -10, -1, 0, 1, 214748364, 2147483647, 9223372036854775807]
+    values = [
+        [
+            "id1：1", "id2：1", "id3：1",
+            "attr1:1", "attr2:1", "attr3:1",
+            False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"
+        ],
+        [
+            "id1：2", "id2：2", "id3：2",
+            "attr1:2", "attr2:2", "attr3:2",
+            True, -2147483648, -9223372036854775808, -0.12345678, -0.12345678901234567, "abcdefghijklmnopqrstuvwsyz",
+            -9223372036854775808, date(1000, 1, 1), 'abcdefghijklmnopqrstuvwsyz'.encode('utf-8'),
+            "abcdefghijklmnopqrstuvwsyz"
+        ],
+        [
+            "id1：3", "id2：3", "id3：3",
+            "attr1:3", "attr2:3", "attr3:3",
+            True, 2147483647, 9223372036854775807, 0.123456789, 0.12345678901234567, "!@#$%^&*()_+}{|:'`~-=[];,./<>?~",
+            9223372036854775807, date(9999, 12, 31), '!@#$%^&*()_+}{|:`~-=[];,./<>?~'.encode('utf-8'),
+            "!@#$%^&*()_+}{|:`~-=[];,./<>?~"
+        ],
+        [
+            "id1：4", "id2：4", "id3：4",
+            "attr1:4", "attr2:4", "attr3:4",
+            True, 1, 1, 1.0, 1.0, "没问题", 1, date(1970, 1, 1), '没问题'.encode('utf-8'), "没问题"
+        ],
+        [
+            "id1：5", "id2：5", "id3：5",
+            "attr1:5", "attr2:5", "attr3:5",
+            True, -1, -1, 1.1234567, 1.1234567890123456, "！@#￥%……&*（）——|：“《》？·【】、；‘，。/", 11, date(1970, 1, 1),
+            '！@#￥%……&*（）——|：“《》？·【】、；‘，。/'.encode('utf-8'), "！@#￥%……&*（）——|：“《》？·【】、；‘，。/"
+        ],
+        [
+            "id1：6", "id2：6", "id3：6",
+            "attr1:6", "attr2:6", "attr3:6",
+            True, 10, 11, 4.123456, 4.123456789012345,
+            "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:'`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题", 11,
+            date(1970, 1, 1),
+            '1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题'.encode(
+                'utf-8'),
+            "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题"
+        ],
+        [
+            "id1：7", "id2：7", "id3：7",
+            "attr1:7", "attr2:7", "attr3:7",
+            True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1),
+            'Hello, World!'.encode('utf-8'),
+            "string01"
+        ],
+        [
+            "id1：8", "id2：8", "id3：8",
+            "attr1:8", "attr2:8", "attr3:8",
+            None, None, None, None, None, None, None, None, None, None
+        ],
+        [
+            None, None, None,
+            None, None, None,
+            True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "
+        ],
+        [
+            None, None, None,
+            None, None, None,
+            None, None, None, None, None, None, None, None, None, None
+        ]
+    ]
     tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
     session.insert(tablet)
 
@@ -182,6 +183,11 @@ def fixture_():
     yield
 
     # 用例执行完成后清理环境代码
+    column_names.clear()
+    data_types.clear()
+    column_types.clear()
+    timestamps.clear()
+    values.clear()
     # 清理数据库
     try:
         with session.execute_query_statement("show databases") as session_data_set:
@@ -233,7 +239,8 @@ def test_fields1():
             # 其他列
             for col_index in range(len(data_types)):
                 assert row_record.get_fields()[col_index + 1].get_data_type() == data_types[
-                    col_index], "Actual type does not match, expected:" + str(data_types[col_index]) + ", actual:" + str(
+                    col_index], "Actual type does not match, expected:" + str(
+                    data_types[col_index]) + ", actual:" + str(
                     row_record.get_fields()[col_index + 1].get_data_type())
 
 
@@ -245,41 +252,74 @@ def test_fields2():
             "select * from table_b order by time") as session_data_set:
         while session_data_set.has_next():
             row_record = session_data_set.next()
+            # 1、测试time列的值
+            if 2147483647 <= timestamps[row_index] or timestamps[row_index] <= 0: # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
+                # 对于特殊时间戳值，只验证不为None
+                assert row_record.get_fields()[0].get_object_value(TSDataType.TIMESTAMP) is not None, \
+                    "Actual time does not match, expected:" + str(timestamps[row_index]) + ", actual:" + str()
+            else:
+                # 其他时间戳正常处理（包括get_object_value和get_timestamp_value）
+                expected_datetime = datetime.datetime.fromtimestamp(timestamps[row_index] / 1000.0)
+                assert row_record.get_fields()[0].get_object_value(TSDataType.TIMESTAMP).strftime(
+                    '%Y-%m-%d %H:%M:%S') == expected_datetime.strftime(
+                    '%Y-%m-%d %H:%M:%S'), \
+                    "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                        actual_value)
+                assert row_record.get_fields()[0].get_timestamp_value().strftime(
+                    '%Y-%m-%d %H:%M:%S') == expected_datetime.strftime(
+                    '%Y-%m-%d %H:%M:%S'), \
+                    "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                        actual_value)
+            # 2、测试其他列的值（TAG列、属性列和Filed列）
             for col_index in range(len(values[row_index])):
-                # 使用get_object_value函数
+                # 测试get_object_value函数
                 if data_types[col_index] == TSDataType.TIMESTAMP:  # timestamp类型返回值需要特殊处理
                     expected_value = values[row_index][col_index]
                     actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
                     if expected_value is not None:
                         # 处理特殊时间戳值
-                        if expected_value in [0, -9223372036854775808, 9223372036854775807]:
+                        if 2147483647 <= expected_value or expected_value <= 0: # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
                             # 对于特殊时间戳值，只验证不为None
                             assert actual_value is not None, \
                                 "Actual value should not be None for special timestamp, expected:" + str(expected_value)
                         else:
                             # 其他时间戳正常处理
-                            try:
-                                expected_datetime = datetime.datetime.fromtimestamp(expected_value / 1000.0)
-                                assert actual_value.strftime('%Y-%m-%d %H:%M:%S') == expected_datetime.strftime(
-                                    '%Y-%m-%d %H:%M:%S'), \
-                                    "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
-                                        actual_value)
-                            except (OSError, ValueError):
-                                # 如果fromtimestamp失败，使用get_timestamp_value进行比较
-                                assert actual_value == row_record.get_fields()[col_index + 1].get_timestamp_value(), \
-                                    "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
-                                        actual_value)
+                            expected_datetime = datetime.datetime.fromtimestamp(expected_value / 1000.0)
+                            assert actual_value.strftime('%Y-%m-%d %H:%M:%S') == expected_datetime.strftime(
+                                '%Y-%m-%d %H:%M:%S'), \
+                                "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                                    actual_value)
                     else:
                         assert actual_value is None, "Actual value does not match, expected: None, actual:" + str(
                             actual_value)
-                else:
-                    # 其他类型的原有比较逻辑保持不变
-                    assert row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index]) == values[row_index][
-                        col_index], "Actual value does not match, expected:" + str(
+                elif data_types[col_index] == TSDataType.FLOAT:  # float类型返回值需要特殊处理：会存在浮点数精度问题
+                    expected_value = values[row_index][col_index]
+                    actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
+                    if expected_value is not None:
+                        assert abs(actual_value - expected_value) < 1e-7, \
+                            "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                                actual_value)
+                    else:
+                        assert actual_value is None, "Actual value does not match, expected: None, actual:" + str(
+                            actual_value)
+                elif data_types[col_index] == TSDataType.DOUBLE:  # double类型返回值需要特殊处理：会存在浮点数精度问题
+                    expected_value = values[row_index][col_index]
+                    actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
+                    if expected_value is not None:
+                        assert abs(actual_value - expected_value) < 1e-15, \
+                            "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                                actual_value)
+                    else:
+                        assert actual_value is None, "Actual value does not match, expected: None, actual:" + str(
+                            actual_value)
+                else:  # 其他类型的原有比较逻辑保持不变
+                    assert row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index]) == \
+                           values[row_index][
+                               col_index], "Actual value does not match, expected:" + str(
                         values[row_index][col_index]) + ", actual:" + str(
                         row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index]))
 
-                # 使用其他get_xxx_value函数
+                # 3、测试其他get_xxx_value函数
                 if data_types[col_index] == TSDataType.BOOLEAN:
                     assert row_record.get_fields()[col_index + 1].get_bool_value() == values[row_index][
                         col_index], "Actual value does not match, expected:" + str(
@@ -365,7 +405,11 @@ def test_fields3():
         while session_data_set.has_next():
             row_record = session_data_set.next()
             for col_index in range(len(values[row_index])):
-                assert row_record.get_fields()[col_index + 1].is_null() == (values[row_index][col_index] is None), "is_null does not match, expected value:" + str(values[row_index][col_index]) + ", actual value:" + str(row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])) + ", record:" + str(row_record)
+                assert row_record.get_fields()[col_index + 1].is_null() == (
+                        values[row_index][col_index] is None), "is_null does not match, expected value:" + str(
+                    values[row_index][col_index]) + ", actual value:" + str(
+                    row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])) + ", record:" + str(
+                    row_record)
 
             # copy
             row_record.get_fields()[1].copy(row_record.get_fields()[1])
@@ -467,6 +511,7 @@ def test_fields_error1():
             e) == "Null Field Exception!", "期待报错信息与实际不一致，期待：Exception: Null Field Exception!，实际：" + type(
             e).__name__ + ":" + str(e)
 
+
 # 2、StatementExecutionException异常
 @pytest.mark.usefixtures('fixture_')
 def test_query_error2():
@@ -474,4 +519,5 @@ def test_query_error2():
         session.execute_query_statement("StatementExecutionException")
         assert False, "期待报错，实际无报错"
     except Exception as e:
-        assert isinstance(e, StatementExecutionException) and "StatementExecutionException" in str(e), "期待报错信息与实际不一致，期待：StatementExecutionException: ，实际：" + type(e).__name__ + ":" + str(e)
+        assert isinstance(e, StatementExecutionException) and "StatementExecutionException" in str(
+            e), "期待报错信息与实际不一致，期待：StatementExecutionException: ，实际：" + type(e).__name__ + ":" + str(e)
