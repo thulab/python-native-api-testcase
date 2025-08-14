@@ -71,7 +71,7 @@ def check_session_validity1(session):
             actual += 1
 
     assert expect == actual, "Actual number does not match, expected:" + str(expect) + ", actual:" + str(actual)
-    session.execute_non_query_statement("DELETE DATABASE root.**")
+    session.delete_storage_group(database_name_)
 
 
 # 测试 fixture：测试环境清理

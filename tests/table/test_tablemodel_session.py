@@ -314,7 +314,6 @@ def test_session7():
 ################## 异常情况 ##################
 
 # 1、IoTDBConnectionException异常：未实现
-@pytest.mark.usefixtures('fixture_')
 def test_session_error1():
     config = TableSessionConfig(
         node_urls=[f"192.0.2.0:6667"],
