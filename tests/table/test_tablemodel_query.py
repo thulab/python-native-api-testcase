@@ -18,6 +18,7 @@ session = TableSession(TableSessionConfig())
 """
 
 # 全局变量
+config_path = "../conf/config.yml"
 column_names = []
 data_types = []
 column_types = []
@@ -32,7 +33,7 @@ def read_config(file_path):
 
 def get_session_():
     global session
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     if config['enable_cluster']:

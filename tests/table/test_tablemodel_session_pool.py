@@ -22,6 +22,7 @@ from iotdb.utils.exception import IoTDBConnectionException
  Date：2025/8/1
 """
 
+config_path = "../conf/config.yml"
 
 # 读取配置文件
 def read_config(file_path):
@@ -138,7 +139,7 @@ def fixture_():
 
     try:
         # 读取配置文件
-        with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+        with open(config_path, 'r', encoding='utf-8') as file:
             config = yaml.safe_load(file)
 
         config = TableSessionPoolConfig(
@@ -174,12 +175,11 @@ def test_session1():
     session_pool.close()
 
 
-
 # 2、测试最全 session 连接：session指定数据库
 @pytest.mark.usefixtures('fixture_')
 def test_session2():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     database_name = "test_session2"
@@ -211,7 +211,7 @@ def test_session2():
 @pytest.mark.usefixtures('fixture_')
 def test_session3():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionPoolConfig(
@@ -231,7 +231,7 @@ def test_session3():
 @pytest.mark.usefixtures('fixture_')
 def test_session4():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionPoolConfig(
@@ -251,7 +251,7 @@ def test_session4():
 @pytest.mark.usefixtures('fixture_')
 def test_session5():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionPoolConfig(
@@ -272,7 +272,7 @@ def test_session5():
 @pytest.mark.usefixtures('fixture_')
 def test_session6():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionPoolConfig(
@@ -295,7 +295,7 @@ def test_session6():
 # @pytest.mark.usefixtures('fixture_')
 # def test_session7():
 #     # 读取配置文件
-#     with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+#     with open(config_path, 'r', encoding='utf-8') as file:
 #         config = yaml.safe_load(file)
 #
 #     config = TableSessionPoolConfig(
@@ -316,7 +316,7 @@ def test_session6():
 @pytest.mark.usefixtures('fixture_')
 def test_session8():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config1 = TableSessionPoolConfig(
@@ -371,7 +371,7 @@ def test_session8():
 @pytest.mark.usefixtures('fixture_')
 def test_session9():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config1 = TableSessionPoolConfig(

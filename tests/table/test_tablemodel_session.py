@@ -21,6 +21,8 @@ from iotdb.utils.exception import IoTDBConnectionException
  Date：2025/8/1
 """
 
+# 配置文件目录
+config_path = "../conf/config.yml"
 
 # 读取配置文件
 def read_config(file_path):
@@ -137,7 +139,7 @@ def fixture_():
 
     try:
         # 读取配置文件
-        with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+        with open(config_path, 'r', encoding='utf-8') as file:
             config = yaml.safe_load(file)
 
         config = TableSessionConfig(
@@ -164,7 +166,7 @@ def fixture_():
 @pytest.mark.usefixtures('fixture_')
 def test_session1():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     # 判断配置文件是否为默认值
@@ -181,7 +183,7 @@ def test_session1():
 @pytest.mark.usefixtures('fixture_')
 def test_session2():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     database_name = "test_session2"
@@ -210,7 +212,7 @@ def test_session2():
 @pytest.mark.usefixtures('fixture_')
 def test_session3():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionConfig(
@@ -230,7 +232,7 @@ def test_session3():
 @pytest.mark.usefixtures('fixture_')
 def test_session4():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionConfig(
@@ -250,7 +252,7 @@ def test_session4():
 @pytest.mark.usefixtures('fixture_')
 def test_session5():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionConfig(
@@ -271,7 +273,7 @@ def test_session5():
 @pytest.mark.usefixtures('fixture_')
 def test_session6():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionConfig(
@@ -294,7 +296,7 @@ def test_session6():
 @pytest.mark.usefixtures('fixture_')
 def test_session7():
     # 读取配置文件
-    with open('../conf/config.yml', 'r', encoding='utf-8') as file:
+    with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     config = TableSessionConfig(
