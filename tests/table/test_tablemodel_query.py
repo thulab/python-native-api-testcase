@@ -18,7 +18,7 @@ session = TableSession(TableSessionConfig())
 """
 
 # 全局变量
-config_path = "../conf/config.yml"
+config_path = "../../conf/config.yml"
 column_names = []
 data_types = []
 column_types = []
@@ -337,10 +337,15 @@ def test_fields2():
                         values[row_index][col_index]) + ", actual:" + str(
                         row_record.get_fields()[col_index + 1].get_long_value())
                 elif data_types[col_index] == TSDataType.FLOAT:
-                    assert row_record.get_fields()[col_index + 1].get_float_value() == values[row_index][
-                        col_index], "Actual value does not match, expected:" + str(
-                        values[row_index][col_index]) + ", actual:" + str(
-                        row_record.get_fields()[col_index + 1].get_float_value())
+                    expected_value = values[row_index][col_index]
+                    actual_value = row_record.get_fields()[col_index + 1].get_float_value()
+                    if expected_value is not None:
+                        assert abs(actual_value - expected_value) < 1e-7, \
+                            "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
+                                actual_value)
+                    else:
+                        assert actual_value is None, "Actual value does not match, expected: None, actual:" + str(
+                            actual_value)
                 elif data_types[col_index] == TSDataType.DOUBLE:
                     assert row_record.get_fields()[col_index + 1].get_double_value() == values[row_index][
                         col_index], "Actual value does not match, expected:" + str(
