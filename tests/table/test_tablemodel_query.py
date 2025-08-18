@@ -18,7 +18,7 @@ session = TableSession(TableSessionConfig())
 """
 
 # 全局变量
-config_path = "../../conf/config.yml"
+config_path = "../conf/config.yml"
 column_names = []
 data_types = []
 column_types = []

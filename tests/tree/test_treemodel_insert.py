@@ -19,7 +19,7 @@ from datetime import date
 """
 
 # 配置文件目录
-config_path = "../../conf/config.yml"
+config_path = "../conf/config.yml"
 
 
 # 获取配置文件的目录
