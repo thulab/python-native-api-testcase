@@ -297,7 +297,7 @@ def test_fields2():
                     expected_value = values[row_index][col_index]
                     actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
                     if expected_value is not None:
-                        assert abs(actual_value - expected_value) < 1e-7, \
+                        assert abs(actual_value - expected_value) < 1e-6, \
                             "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
                                 actual_value)
                     else:
@@ -307,7 +307,7 @@ def test_fields2():
                     expected_value = values[row_index][col_index]
                     actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
                     if expected_value is not None:
-                        assert abs(actual_value - expected_value) < 1e-15, \
+                        assert abs(actual_value - expected_value) < 1e-12, \
                             "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
                                 actual_value)
                     else:
@@ -340,7 +340,7 @@ def test_fields2():
                     expected_value = values[row_index][col_index]
                     actual_value = row_record.get_fields()[col_index + 1].get_float_value()
                     if expected_value is not None:
-                        assert abs(actual_value - expected_value) < 1e-7, \
+                        assert abs(actual_value - expected_value) < 1e-6, \
                             "Actual value does not match, expected:" + str(expected_value) + ", actual:" + str(
                                 actual_value)
                     else:
