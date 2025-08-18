@@ -18,25 +18,16 @@ from datetime import date
  Date：2024/10/24
 """
 
-session = None
+# 配置文件目录
+config_path = "../conf/config.yml"
+
+
 # 获取配置文件的目录
 def read_config():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(current_dir)
-    config_path = os.path.join(parent_dir, 'conf', 'config.yml')
     with open(config_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
 
 def get_session_():
-    global session
-
-    # linux
-    # config = read_config()
-    # session = Session( config['database']['host'], config['database']['port'], config['database']['username'], config['database']['password'])
-    # session.open(True)
-    # return session
-    # Winodws
-    config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'conf', 'config.yml')
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
@@ -185,6 +176,7 @@ def query(sql):
 
 @pytest.fixture()
 def fixture_():
+    global session
     # 用例执行前的环境搭建代码
     # 获取session
     session = get_session_()
@@ -2004,4 +1996,30 @@ def test_insert_direct():
         np_tablet_ = NumpyTablet(device_id, measurements_, data_types_, np_values_, np_timestamps_)
         session.insert_aligned_tablet(np_tablet_)
 
-
+# 测试删除多个时间序列指定时间之前的数据
+@pytest.mark.usefixtures('fixture_')
+def test_delete_data():
+    # 1、普通 Tablet 插入
+    expect = 10
+    device_id = "root.tests.g1.d1"
+    measurements_ = ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"]
+    data_types_ = [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+    values_ = [
+            [False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"],
+            [True, -2147483648, -9223372036854775808, -0.12345678, -0.12345678901234567, "abcdefghijklmnopqrstuvwsyz", -9223372036854775808, date(1000, 1, 1), 'abcdefghijklmnopqrstuvwsyz'.encode('utf-8'), "abcdefghijklmnopqrstuvwsyz"],
+            [True, 2147483647, 9223372036854775807, 0.123456789, 0.12345678901234567, "!@#$%^&*()_+}{|:'`~-=[];,./<>?~", 9223372036854775807, date(9999, 12, 31), '!@#$%^&*()_+}{|:`~-=[];,./<>?~'.encode('utf-8'), "!@#$%^&*()_+}{|:`~-=[];,./<>?~"],
+            [True, 1, 1, 1.0, 1.0, "没问题", 1, date(1970, 1, 1), '没问题'.encode('utf-8'), "没问题"],
+            [True, -1, -1, 1.1234567, 1.1234567890123456, "！@#￥%……&*（）——|：“《》？·【】、；‘，。/", 11, date(1970, 1, 1), '！@#￥%……&*（）——|：“《》？·【】、；‘，。/'.encode('utf-8'), "！@#￥%……&*（）——|：“《》？·【】、；‘，。/"],
+            [True, 10, 11, 4.123456, 4.123456789012345, "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:'`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题", 11, date(1970, 1, 1), '1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题'.encode('utf-8'), "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题"],
+            [True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'), "string01"],
+            [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""],
+            [True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "],
+            [True, 10, 11, 1.1, 10011.1, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'), "string01"]
+        ]
+    timestamps_ = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    tablet_ = Tablet(device_id, measurements_, data_types_, values_, timestamps_)
+    session.insert_tablet(tablet_)
+    # 计算实际时间序列的行数量
+    actual = query("select * from root.tests.g1.d1")
+    # 判断是否符合预期
+    assert expect == actual
