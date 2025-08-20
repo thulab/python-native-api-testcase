@@ -5,6 +5,7 @@ from iotdb.Session import Session
 from iotdb.SessionPool import PoolConfig, SessionPool
 from iotdb.utils.IoTDBConstants import TSDataType, TSEncoding, Compressor
 from iotdb.utils.Tablet import Tablet
+from iotdb.utils.exception import IoTDBConnectionException
 
 # 配置文件目录
 config_path = "../conf/config.yml"
@@ -84,14 +85,21 @@ def test_database2():
     session.delete_storage_groups(database_list)
 
 ########### 异常情况 #########
-# # 1、测试delete_storage_group异常：未创建连接而执行或执行时session重连
-# def test_database_error1():
-#     with open(config_path, 'r', encoding='utf-8') as file:
-#         config = yaml.safe_load(file)
-#     session = Session(
-#         config['host'],
-#         config['port'],
-#         user=config['username'],
-#         password=config['password'],
-#     )
-#     session.set_storage_group("root.sg_test_01")
+# 1、测试delete_storage_group异常：未创建连接而执行或执行时session重连
+def test_database_error1():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open()
+    session.close()
+    try:
+        session.set_storage_group("root.test_database")
+    except Exception as e:
+        assert isinstance(e,
+                          IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+            e)

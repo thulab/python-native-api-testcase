@@ -12,8 +12,8 @@ from iotdb.utils.NumpyTablet import NumpyTablet
 from datetime import date
 
 """
- Title：测试树模型python写入接口—正常情况
- Describe：基于2.0.1版本树模型，测试各种写入接口
+ Title：测试树模型python写入接口
+ Describe：树模型，测试各种写入接口
  Author：肖林捷
  Date：2024/10/24
 """
@@ -29,12 +29,27 @@ def read_config():
 
 
 def get_session_():
+    global session
+    global session_pool
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
-    session = Session(config['host'], config['port'], config['username'], config['password'])
-    session.open()
-    return session
+    if config['enable_cluster']:
+        session = Session(config['host'], config['port'], config['username'], config['password'])
+        session.open()
+        return session
+    else:
+        pool_config = PoolConfig(
+            node_urls=config['node_urls'],
+            user_name=config['username'],
+            password=config['password'],
+        )
+        max_pool_size = 10
+        wait_timeout_in_ms = 100000
+        session_pool = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
+        session = session_pool.get_session()
+        session.open(False)
+        return session
 
 
 def create_database(session):
@@ -202,13 +217,6 @@ def create_aligned_timeseries(session):
                       Compressor.LZMA2, Compressor.GZIP, Compressor.GZIP, Compressor.GZIP, Compressor.GZIP, ]
     session.create_aligned_time_series(device_id, measurements_lst, data_type_lst, encoding_lst, compressor_lst)
 
-
-def delete_database(session):
-    group_name_lst = ["root.tests.g1", "root.tests.g2", "root.tests.g3", "root.tests.g4", "root.tests.g5",
-                      "root.tests.g6"]
-    session.delete_storage_groups(group_name_lst)
-
-
 def query(sql):
     actual = 0
     with session.execute_query_statement(
@@ -225,6 +233,8 @@ def query(sql):
 @pytest.fixture()
 def fixture_():
     global session
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
     # 用例执行前的环境搭建代码
     # 获取session
     session = get_session_()
@@ -237,12 +247,18 @@ def fixture_():
     yield
     # 用例执行完成后清理环境代码
     try:
-        # 清库（当前每次用例执行完清库可能会出现库不存在的现象）
-        delete_database(session)
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema":
+                    session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
-        print(e)
-    # 关闭session
-    session.close()
+        assert False, str(e)
+    if config['enable_cluster']:
+        session.close()
+    else:
+        session_pool.put_back(session)
+        session_pool.close()
 
 
 # 测试往非对齐时间序列写入一条 tablet 数据

@@ -2,6 +2,7 @@ import datetime
 import pytest
 import yaml
 from iotdb.table_session import TableSession, TableSessionConfig
+from iotdb.table_session_pool import TableSessionPoolConfig, TableSessionPool
 from iotdb.utils.IoTDBConstants import TSDataType
 from iotdb.utils.Tablet import Tablet, ColumnType
 from datetime import date
@@ -19,6 +20,7 @@ session = TableSession(TableSessionConfig())
 
 # 全局变量
 config_path = "../conf/config.yml"
+database_name = "test_query"
 column_names = []
 data_types = []
 column_types = []
@@ -33,6 +35,7 @@ def read_config(file_path):
 
 def get_session_():
     global session
+    global session_pool
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
@@ -42,20 +45,23 @@ def get_session_():
             username=config['username'],
             password=config['password'],
         )
-        return TableSession(config)
+        session = TableSession(config)
+        return session
     else:
-        config = TableSessionConfig(
-            node_urls=[f"{config['host']}:{config['port']}"],
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
             username=config['username'],
             password=config['password'],
         )
-        return TableSession(config)
+        session_pool = TableSessionPool(config)
+        session = session_pool.get_session()
+        return session
 
 
 def create_database(session):
     # 创建数据库
-    session.execute_non_query_statement("create database test1")
-    session.execute_non_query_statement("use test1")
+    session.execute_non_query_statement("create database " + database_name)
+    session.execute_non_query_statement("use " + database_name)
 
 
 def create_table(session):
@@ -155,14 +161,12 @@ def insert_data(session):
     session.insert(tablet)
 
 
-def delete_database(session):
-    session.execute_non_query_statement("drop database test1")
-
-
 @pytest.fixture()
 def fixture_():
     # 用例执行前的环境搭建代码
     global session
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
     # 获取session
     session = get_session_()
     # 清理残余数据库
@@ -197,10 +201,14 @@ def fixture_():
                 if str(fields[0]) != "information_schema":
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
-        print(e)
+        assert False, str(e)
 
     # 关闭 session
-    session.close()
+    if config['enable_cluster']:
+        session.close()
+    else:
+        session.close()
+        session_pool.close()
 
 
 # 测试SessionDataSet：验证列类型和数据类型以及行数的正确性

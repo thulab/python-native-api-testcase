@@ -8,6 +8,7 @@ from datetime import date
 from iotdb.table_session import TableSession, TableSessionConfig
 from iotdb.Session import Session
 from iotdb.SessionPool import SessionPool, PoolConfig
+from iotdb.table_session_pool import TableSessionPoolConfig, TableSessionPool
 from iotdb.utils.BitMap import BitMap
 from iotdb.utils.IoTDBConstants import TSDataType
 from iotdb.utils.Tablet import Tablet, ColumnType
@@ -23,6 +24,7 @@ from datetime import date
 
 # 配置文件目录
 config_path = "../conf/config.yml"
+database_names = ["test_insert1", "test_insert2"]
 
 def read_config(file_path):
     with open(file_path, 'r') as file:
@@ -31,6 +33,7 @@ def read_config(file_path):
 
 def get_session_():
     global session
+    global session_pool
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
@@ -40,26 +43,29 @@ def get_session_():
             username=config['username'],
             password=config['password'],
         )
-        return TableSession(config)
+        session = TableSession(config)
+        return session
     else:
-        config = TableSessionConfig(
-            node_urls=[f"{config['host']}:{config['port']}"],
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
             username=config['username'],
             password=config['password'],
         )
-        return TableSession(config)
+        session_pool = TableSessionPool(config)
+        session = session_pool.get_session()
+        return session
 
 
 def create_database(session):
     # 创建数据库
-    session.execute_non_query_statement("create database test1")
-    session.execute_non_query_statement("create database test2")
-    session.execute_non_query_statement("use test1")
+    for database_name in database_names:
+        session.execute_non_query_statement("create database " + database_name)
+    session.execute_non_query_statement("use " + database_names[0])
 
 
 def create_table(session):
     session.execute_non_query_statement(
-        "create table test1.table1("
+        "create table test_insert1.table1("
         "region_id STRING TAG, plant_id STRING TAG, device_id STRING TAG, "
         "model STRING ATTRIBUTE, temperature FLOAT FIELD, humidity DOUBLE FIELD) with (TTL=3600000)"
     )
@@ -69,12 +75,12 @@ def create_table(session):
         " speed DOUBLE FIELD) with (TTL=6600000)"
     )
     session.execute_non_query_statement(
-        "create table test2.table1("
+        "create table test_insert2.table1("
         "region_id STRING TAG, plant_id STRING TAG, device_id STRING TAG, "
         "model STRING ATTRIBUTE, temperature FLOAT FIELD, humidity DOUBLE FIELD) with (TTL=3600000)"
     )
     session.execute_non_query_statement(
-        "create table test2.table2("
+        "create table test_insert2.table2("
         "region_id STRING TAG, plant_id STRING TAG, color STRING ATTRIBUTE, temperature FLOAT FIELD,"
         " speed DOUBLE FIELD) with (TTL=6600000)"
     )
@@ -107,12 +113,6 @@ def create_table(session):
         'TEXT TEXT FIELD, TIMESTAMP TIMESTAMP FIELD, DATE DATE FIELD, BLOB BLOB FIELD, STRING STRING FIELD)'
     )
 
-
-def delete_database(session):
-    session.execute_non_query_statement("drop database test1")
-    session.execute_non_query_statement("drop database test2")
-
-
 def query(sql):
     actual = 0
     with session.execute_query_statement(sql) as session_data_set:
@@ -128,6 +128,8 @@ def query(sql):
 def fixture_():
     # 用例执行前的环境搭建代码
     global session
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
     # 获取session
     session = get_session_()
     # 清理残余数据库
@@ -154,10 +156,14 @@ def fixture_():
                 if str(fields[0]) != "information_schema":
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
-        print(e)
+        assert False, str(e)
 
     # 关闭 session
-    session.close()
+    if config['enable_cluster']:
+        session.close()
+    else:
+        session.close()
+        session_pool.close()
 
 
 # 测试一般写入数据
