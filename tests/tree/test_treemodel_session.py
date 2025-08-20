@@ -7,6 +7,7 @@ from iotdb.Session import Session
 from iotdb.SessionPool import PoolConfig, SessionPool
 from iotdb.utils.IoTDBConstants import TSDataType, TSEncoding, Compressor
 from iotdb.utils.Tablet import Tablet
+from iotdb.utils.exception import IoTDBConnectionException
 
 """
  Title：测试树模型Session连接
@@ -18,10 +19,12 @@ from iotdb.utils.Tablet import Tablet
 # 配置文件目录
 config_path = "../conf/config.yml"
 
+
 # 读取配置文件
 def read_config(file_path):
     with open(file_path, 'r') as file:
         return yaml.safe_load(file)
+
 
 # 验证Session有效性
 def check_session_validity1(session):
@@ -54,7 +57,8 @@ def check_session_validity1(session):
     values_ = []
     timestamps_ = []
     for i in range(10):
-        values_.append([True, i * -100, i * 100, i * -0.123, i * 0.123, "text" + str(i), "string" + str(i), ("blob" + str(i)).encode('utf-8'), date(1970, 1, 1), i * 100])
+        values_.append([True, i * -100, i * 100, i * -0.123, i * 0.123, "text" + str(i), "string" + str(i),
+                        ("blob" + str(i)).encode('utf-8'), date(1970, 1, 1), i * 100])
         timestamps_.append(i)
         expect += 1
 
@@ -122,6 +126,7 @@ def fixture_():
     except Exception as e:
         assert False, "There is an error:" + str(e)
 
+
 # 1、测试session连接：最简构造
 @pytest.mark.usefixtures('fixture_')
 def test_session1():
@@ -134,6 +139,7 @@ def test_session1():
     session.open(False)
     check_session_validity1(session)
     session.close()
+
 
 # 2、测试session连接：最繁构造
 @pytest.mark.usefixtures('fixture_')
@@ -156,6 +162,7 @@ def test_session2():
     check_session_validity1(session)
     session.close()
 
+
 # 3、测试session连接：多次open
 @pytest.mark.usefixtures('fixture_')
 def test_session3():
@@ -172,6 +179,7 @@ def test_session3():
     check_session_validity1(session)
     session.close()
 
+
 # 4、测试session连接：多次close
 @pytest.mark.usefixtures('fixture_')
 def test_session4():
@@ -187,6 +195,7 @@ def test_session4():
     check_session_validity1(session)
     for i in range(10):
         session.close()
+
 
 # 5、测试session连接：close后再open
 @pytest.mark.usefixtures('fixture_')
@@ -210,63 +219,64 @@ def test_session5():
 # 6、测试超时连接：需要手动测试，不清楚具体多久会超时
 @pytest.mark.usefixtures('fixture_')
 def test_session6():
-   # open and read yaml files
-   with open(config_path, 'r', encoding='utf-8') as file:
-      config = yaml.safe_load(file)
+    # open and read yaml files
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
 
-   connection_timeout = None
+    connection_timeout = None
 
-   # determine whether to enable session pool configuration
-   if config['enable_session_pool']:
-      pool_config = PoolConfig(
-         node_urls=config['node_urls'],
-         user_name=config['username'],
-         password=config['password'],
-         connection_timeout_in_ms=connection_timeout,
-      )
-      max_pool_size = 5
-      wait_timeout_in_ms = 3000
-
-      # Create a session pool
-      session_pool = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
-
-      # get a session
-      session = session_pool.get_session()
-   else:
-      # determine whether to enable cluster configuration
-      if config['enable_cluster']:
-         # create cluster session connection
-         session = Session.init_from_node_urls(
+    # determine whether to enable session pool configuration
+    if config['enable_session_pool']:
+        pool_config = PoolConfig(
             node_urls=config['node_urls'],
-            user=config['username'],
+            user_name=config['username'],
             password=config['password'],
             connection_timeout_in_ms=connection_timeout,
-         )
-      else:
-         # create stand-alone session connection
-         session = Session(
-            config['host'],
-            config['port'],
-            config['username'],
-            config['password'],
-            connection_timeout_in_ms=connection_timeout,
-         )
-      # open session connection
-      session.open(False)
+        )
+        max_pool_size = 5
+        wait_timeout_in_ms = 3000
 
-   check_session_validity1(session)
+        # Create a session pool
+        session_pool = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
 
-   if config['enable_cluster']:
-      # recovery session connection
-      session_pool.put_back(session)
-      # close session_pool connection
-      session_pool.close()
-   else:
-      # close session connection
-      session.close()
+        # get a session
+        session = session_pool.get_session()
+    else:
+        # determine whether to enable cluster configuration
+        if config['enable_cluster']:
+            # create cluster session connection
+            session = Session.init_from_node_urls(
+                node_urls=config['node_urls'],
+                user=config['username'],
+                password=config['password'],
+                connection_timeout_in_ms=connection_timeout,
+            )
+        else:
+            # create stand-alone session connection
+            session = Session(
+                config['host'],
+                config['port'],
+                config['username'],
+                config['password'],
+                connection_timeout_in_ms=connection_timeout,
+            )
+        # open session connection
+        session.open(False)
+
+    check_session_validity1(session)
+
+    if config['enable_cluster']:
+        # recovery session connection
+        session_pool.put_back(session)
+        # close session_pool connection
+        session_pool.close()
+    else:
+        # close session connection
+        session.close()
+
 
 # 7、测试Session的SSL连接：需要手动测试，测试时请将use_ssl设置为True，并开启iotdb对应配置
-def test_session_ssl_connection():
+def test_session7():
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
@@ -281,4 +291,178 @@ def test_session_ssl_connection():
     session.open(False)
     check_session_validity1(session)
     session.close()
+
+
+# 8、测试session的get_time_zone和set_time_zone函数
+def test_session8():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+        zone_id="UTC+8"
+    )
+    session.open(False)
+    assert 'UTC+8' == session.get_time_zone(), "The expected anomaly is inconsistent with the actual situation, expect:Asia/Shanghai, actual:" + session.get_time_zone()
+    session.set_time_zone("+09:00")
+    assert '+09:00' == session.get_time_zone(), "The expected anomaly is inconsistent with the actual situation, expect:+09:00, actual:" + session.get_time_zone()
+    session.set_time_zone('America/New_York')
+    assert 'America/New_York' == session.get_time_zone(), "The expected anomaly is inconsistent with the actual situation, expect:America/New_York, actual:" + session.get_time_zone()
+    session.close()
+
+
+# 9、测试session的 execute_statement 函数
+@pytest.mark.usefixtures('fixture_')
+def test_session9():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.execute_statement("create database root.session_test1")
+    session_data_set = session.execute_statement("show databases", 100000)
+    databases = []
+    while session_data_set.has_next():
+        database_name = session_data_set.next().get_fields()[0].get_string_value()
+        databases.append(database_name)
+
+    # 验证创建的数据库是否存在
+    assert "root.session_test1" in databases, f"Expected database root.session_test1 not found. Available databases: {databases}"
+    session.close()
+
+
+# 10、测试session的 execute_non_query_statement 和 execute_query_statement 函数
+@pytest.mark.usefixtures('fixture_')
+def test_session10():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.execute_non_query_statement("create database root.session_test1")
+    session_data_set1 = session.execute_query_statement("show databases")
+    databases = []
+    while session_data_set1.has_next():
+        database_name = session_data_set1.next().get_fields()[0].get_string_value()
+        databases.append(database_name)
+
+    # 验证创建的数据库是否存在
+    assert "root.session_test1" in databases, f"Expected database root.session_test1 not found. Available databases: {databases}"
+    session.close()
+
+
+############# 异常情况 #############
+# 1、测试session的get_time_zone和set_time_zone函数异常情况
+# def test_session_error1():
+#     with open(config_path, 'r', encoding='utf-8') as file:
+#         config = yaml.safe_load(file)
+#     session = Session(
+#         config['host'],
+#         config['port'],
+#         user=config['username'],
+#         password=config['password'],
+#     )
+#     session.open(False)
+#     try:
+#         session.set_time_zone(None)
+#         assert False, "The expected anomaly is inconsistent with the actual situation, expect:AssertionError"
+#     except Exception as e:
+#         assert isinstance(e,
+#                           IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+#             e)
+#     assert 'Asia/Shanghai' == session.get_time_zone(), "The expected anomaly is inconsistent with the actual situation, expect:Asia/Shanghai"
+#     # session.close() # TODO：存在异常，session.set_time_zone(None)报错之后会无法关闭 session
+
+# 2、测试session的 execute_non_query_statement函数异常情况
+@pytest.mark.usefixtures('fixture_')
+def test_session_error2():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.close()
+    try:
+        session.execute_non_query_statement("create database root.session_test1")
+        assert False, "The expected anomaly is inconsistent with the actual situation, expect:AssertionError"
+    except Exception as e:
+        assert isinstance(e,
+                          IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+            e)
+
+# 3、测试session的 execute_query_statement函数异常情况
+@pytest.mark.usefixtures('fixture_')
+def test_session_error3():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.close()
+    try:
+        session.execute_query_statement("show databases")
+        assert False, "The expected anomaly is inconsistent with the actual situation, expect:AssertionError"
+    except Exception as e:
+        assert isinstance(e,
+                          IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+            e)
+
+# 4、测试session的 execute_statement函数异常情况
+@pytest.mark.usefixtures('fixture_')
+def test_session_error4():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.close()
+    try:
+        session.execute_statement("show databases")
+        assert False, "The expected anomaly is inconsistent with the actual situation, expect:AssertionError"
+    except Exception as e:
+        assert isinstance(e,
+                          IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+            e)
+
+
+# 5、测试session的set_time_zone函数异常情况
+def test_session_error5():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+    session = Session(
+        config['host'],
+        config['port'],
+        user=config['username'],
+        password=config['password'],
+    )
+    session.open(False)
+    session.close()
+    try:
+        session.set_time_zone('America/New_York')
+    except Exception as e:
+        assert isinstance(e,
+                          IoTDBConnectionException), "The expected anomaly is inconsistent with the actual situation, expect:IoTDBConnectionException, actual:" + str(
+            e)
 
