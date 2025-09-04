@@ -69,7 +69,7 @@ pytest --html=report.html
 
 ```bash
 cd ${python-client-test}/tests
-pytest --cov=iotdb --cov-report=html --cov-branch --cov-config=.coveragerc
+pytest --cov=iotdb --cov-report=html:../cov-report --cov-branch --cov-config=.coveragerc
 ```
 
 生成的报告默认位于程序根目录下`test/htmlcov/`中的index.html 文件，需要指定生成位置可以更改：`--cov-report=html:路径`，如`--cov-report=html:../cov-report`

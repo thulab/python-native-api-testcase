@@ -16,6 +16,7 @@ from datetime import date
  Describe：树模型，测试各种写入接口
  Author：肖林捷
  Date：2024/10/24
+ TODO：补充完善各种编码和压缩之间是否会导致数据不一致
 """
 
 # 配置文件目录
@@ -217,6 +218,7 @@ def create_aligned_timeseries(session):
                       Compressor.LZMA2, Compressor.GZIP, Compressor.GZIP, Compressor.GZIP, Compressor.GZIP, ]
     session.create_aligned_time_series(device_id, measurements_lst, data_type_lst, encoding_lst, compressor_lst)
 
+
 def query(sql):
     actual = 0
     with session.execute_query_statement(
@@ -236,6 +238,14 @@ def fixture_():
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
     # 用例执行前的环境搭建代码
+    try:
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system":
+                    session.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
     # 获取session
     session = get_session_()
     # 创建数据库
@@ -250,7 +260,7 @@ def fixture_():
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
                 fields = session_data_set.next().get_fields()
-                if str(fields[0]) != "information_schema":
+                if str(fields[0]) != "root.__system":
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
         assert False, str(e)
@@ -1627,20 +1637,134 @@ def test_insert_aligned_records_of_one_device():
     assert expect == actual
 
 
-# 测试带有类型推断的写入
+# 测试带有类型推断的写入：写入单条记录
 @pytest.mark.usefixtures('fixture_')
 def test_insert_str_record():
     global session
-    expect = 1
+    expect1 = 1
     session.insert_str_record("root.tests.g5.d1",
                               1,
                               ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
                               ["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01", 'b"x12x34"',
                                "string01"])
     # 计算实际时间序列的行数量
-    actual = query("select * from root.tests.g5.d1")
+    actual1 = query("select * from root.tests.g5.d1")
     # 判断是否符合预期
-    assert expect == actual
+    assert expect1 == actual1
+
+    expect2 = 1
+    session.insert_str_record("root.tests.g5.d2",
+                                      1,
+                                      "BOOLEAN",
+                                      "true")
+    # 计算实际时间序列的行数量
+    actual2 = query("select * from root.tests.g5.d2")
+    # 判断是否符合预期
+    assert expect2 == actual2
+
+    # TODO: 带None值对应位置的物理量会被删除导致，值和物理量数量不一致
+    # expect3 = 1
+    # session.insert_str_record("root.tests.g5.d3",
+    #                           1,
+    #                           ["BOOLEAN", "INT32", "INT64"],
+    #                           ["true", None, "11"])
+    # # 计算实际时间序列的行数量
+    # actual3 = query("select * from root.tests.g5.d3")
+    # # 判断是否符合预期
+    # assert expect3 == actual3
+
+# 测试带有类型推断的写入：写入单条对齐记录
+@pytest.mark.usefixtures('fixture_')
+def test_insert_aligned_str_record():
+    global session
+    expect1 = 1
+    session.insert_aligned_str_record("root.tests.g5.d10",
+                              1,
+                              ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
+                              ["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01", 'b"x12x34"',
+                               "string01"])
+    # 计算实际时间序列的行数量
+    actual1 = query("select * from root.tests.g5.d10")
+    # 判断是否符合预期
+    assert expect1 == actual1
+
+    expect2 = 1
+    session.insert_aligned_str_record("root.tests.g5.d11",
+                                      1,
+                                      "BOOLEAN",
+                                      "true")
+    # 计算实际时间序列的行数量
+    actual2 = query("select * from root.tests.g5.d11")
+    # 判断是否符合预期
+    assert expect2 == actual2
+
+    # TODO: 带None值对应位置的物理量会被删除导致，值和物理量数量不一致
+    # expect3 = 1
+    # session.insert_aligned_str_record("root.tests.g5.d12",
+    #                                   1,
+    #                                   ["BOOLEAN", "INT32", "INT64"],
+    #                                   ["true", None, "11"])
+    # # 计算实际时间序列的行数量
+    # actual3 = query("select * from root.tests.g5.d12")
+    # # 判断是否符合预期
+    # assert expect3 == actual3
+
+
+# 测试带有类型推断的写入：往一个设备中写入多条记录
+@pytest.mark.usefixtures('fixture_')
+def test_insert_string_records_of_one_device():
+    global session
+    expect1 = 1
+    session.insert_string_records_of_one_device("root.tests.g5.d20", [0],
+                                                [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE",
+                                                  "BLOB", "STRING"]],
+                                                [["true", "11", "11", "11.11", "10011.1", "test01", "11", "1970-01-01",
+                                                  'b"x12x34"', "string01"]])
+    # 计算实际时间序列的行数量
+    actual1 = query("select * from root.tests.g5.d20")
+    # 判断是否符合预期
+    assert expect1 == actual1
+
+    # TODO:未支持处理空值
+    # expect2 = 1
+    # session.insert_string_records_of_one_device("root.tests.g5.d20", [0],
+    #                                             [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE",
+    #                                               "BLOB", "STRING"]],
+    #                                             [["true", None, "11", "11.11", "10011.1", "test01", "11", "1970-01-01",
+    #                                               'b"x12x34"', "string01"]])
+    # # 计算实际时间序列的行数量
+    # actual2 = query("select * from root.tests.g5.d20")
+    # # 判断是否符合预期
+    # assert expect2 == actual2
+
+# 测试带有类型推断的写入：往一个设备中写入多条对齐记录
+@pytest.mark.usefixtures('fixture_')
+def test_insert_aligned_string_records_of_one_device():
+    global session
+    expect1 = 1
+    session.insert_aligned_string_records_of_one_device("root.tests.g5.d30", [0],
+                                                [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE",
+                                                  "BLOB", "STRING"]],
+                                                [["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01",
+                                                  'b"x12x34"', "string01"]])
+    # 计算实际时间序列的行数量
+    actual1 = query("select * from root.tests.g5.d30")
+    # 判断是否符合预期
+    assert expect1 == actual1
+
+    # TODO:未支持处理空值
+    # expect2 = 1
+    # session.insert_aligned_string_records_of_one_device("root.tests.g5.d30", [0],
+    #                                                     [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS",
+    #                                                       "DATE",
+    #                                                       "BLOB", "STRING"]],
+    #                                                     [["true", None, "11", "11.11", "10011.1", "test01", "11",
+    #                                                       "1970-01-01",
+    #                                                       'b"x12x34"', "string01"]])
+    # # 计算实际时间序列的行数量
+    # actual2 = query("select * from root.tests.g5.d30")
+    # # 判断是否符合预期
+    # assert expect2 == actual2
 
 
 # 测试直接写入
@@ -2662,7 +2786,7 @@ def test_insert_aligned_tablets():
 @pytest.mark.usefixtures('fixture_')
 def test_insert_record():
     global session
-    expect = 9
+    expect = 10
     session.insert_record("root.tests.g1.d1", 1,
                           ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
                           [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE,
@@ -2711,10 +2835,10 @@ def test_insert_record():
                            TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING],
                           [True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1),
                            'Hello, World!'.encode('utf-8'), "string01"])
-    # session.insert_record("root.tests.g1.d1", 8,
-    #                       ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
-    #                       [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING],
-    #                       [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""])
+    session.insert_record("root.tests.g1.d1", 8,
+                          ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
+                          [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING],
+                          [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""])
     session.insert_record("root.tests.g1.d1", 9,
                           ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
                           [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE,
@@ -3150,22 +3274,6 @@ def test_insert_aligned_records_of_one_device():
     assert expect == actual
 
 
-# 测试带有类型推断的写入
-@pytest.mark.usefixtures('fixture_')
-def test_insert_str_record():
-    global session
-    expect = 1
-    session.insert_str_record("root.tests.g5.d1",
-                              1,
-                              ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
-                              ["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01", 'b"x12x34"',
-                               "string01"])
-    # 计算实际时间序列的行数量
-    actual = query("select * from root.tests.g5.d1")
-    # 判断是否符合预期
-    assert expect == actual
-
-
 # 测试直接写入
 @pytest.mark.usefixtures('fixture_')
 def test_insert_direct():
@@ -3369,6 +3477,7 @@ def test_delete_data1():
     # 判断是否符合预期
     assert 0 == actual2
 
+
 # 测试删除多个时间序列指定范围的数据（删除全部数据）
 @pytest.mark.usefixtures('fixture_')
 def test_delete_data2():
@@ -3412,8 +3521,105 @@ def test_delete_data2():
     path_list = []
     for i in range(len(measurements_)):
         path_list.append(device_id + "." + measurements_[i])
-    session.delete_data_in_range(path_list, -9223372036854775808,9223372036854775807)
+    session.delete_data_in_range(path_list, -9223372036854775808, 9223372036854775807)
     # 计算实际时间序列的行数量
     actual2 = query("select * from " + device_id)
     # 判断是否符合预期
     assert 0 == actual2
+
+#############异常情况#############
+# 1、测试带有类型推断的写入：往一个设备中写入多条记录
+@pytest.mark.usefixtures('fixture_')
+def test_insert_string_records_of_one_device_error():
+    global session
+    try:
+        session.insert_string_records_of_one_device("root.tests.g5.d1", [0, 1],
+                                                    [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS",
+                                                      "DATE",
+                                                      "BLOB", "STRING"]],
+                                                    [["true", "10", "11", "11.11", "10011.1", "test01", "11",
+                                                      "1970-01-01",
+                                                      'b"x12x34"', "string01"]])
+    except Exception as e:
+        assert  isinstance(e, RuntimeError) and str(
+            e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
+            e).__name__ + ":" + str(e)
+
+# 2、测试带有类型推断的写入：往一个设备中写入多条对齐记录
+@pytest.mark.usefixtures('fixture_')
+def test_insert_aligned_string_records_of_one_device_error():
+    global session
+    try:
+        session.insert_aligned_string_records_of_one_device("root.tests.g5.d10", [0, 1],
+                                                    [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS",
+                                                      "DATE",
+                                                      "BLOB", "STRING"]],
+                                                    [["true", "10", "11", "11.11", "10011.1", "test01", "11",
+                                                      "1970-01-01",
+                                                      'b"x12x34"', "string01"]])
+    except Exception as e:
+        assert  isinstance(e, RuntimeError) and str(
+            e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
+            e).__name__ + ":" + str(e)
+
+# 3、测试insert_records数量不一致情况
+@pytest.mark.usefixtures('fixture_')
+def test_insert_records_error():
+    global session
+    try:
+        session.insert_records(
+            ["root.tests_insert_error3.d1"],
+            [1, 2],
+            [["s1","s2"],["s1","s2"]],
+            [[TSDataType.BOOLEAN, TSDataType.INT32],[TSDataType.BOOLEAN, TSDataType.INT32]],
+            [[False, 0],[True, 1]])
+    except Exception as e:
+        assert  isinstance(e, RuntimeError) and str(
+            e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
+            e).__name__ + ":" + str(e)
+
+# 4、测试 insert_str_record 数量不一致情况
+@pytest.mark.usefixtures('fixture_')
+def test_insert_str_record_error():
+    global session
+    try:
+        session.insert_str_record(
+            "root.tests_insert_error4.d1",
+            1,
+            ["s1"],
+            ["False", "0"])
+    except Exception as e:
+        assert  isinstance(e, RuntimeError) and str(
+            e) == "length of measurements does not equal to length of values!", "期待报错信息与实际不一致，期待：RuntimeError: length of measurements does not equal to length of values!，实际：" + type(
+            e).__name__ + ":" + str(e)
+
+# 5、测试 insert_record 数量不一致情况
+@pytest.mark.usefixtures('fixture_')
+def test_insert_record_error():
+    global session
+    try:
+        session.insert_record(
+            "root.tests_insert_error5.d1",
+            1,
+            ["s1"],
+            [TSDataType.BOOLEAN],
+            ["False", "0"])
+    except Exception as e:
+        assert  isinstance(e, RuntimeError) and str(
+            e) == "length of data types does not equal to length of values!", "期待报错信息与实际不一致，期待：RuntimeError: length of data types does not equal to length of values!，实际：" + type(
+            e).__name__ + ":" + str(e)
+
+
+# 6、测试 insert_aligned_records 设备为空情况 TODO：只打打印日志，不报错
+# @pytest.mark.usefixtures('fixture_')
+# def test_insert_aligned_records_error():
+#     global session
+#     session.insert_aligned_records(
+#         [],
+#         [1, 2],
+#         [["s1", "s2"], ["s1", "s2"]],
+#         [[TSDataType.BOOLEAN, TSDataType.INT32], [TSDataType.BOOLEAN, TSDataType.INT32]],
+#         [[False, 0], [True, 1]])
+
+
+
