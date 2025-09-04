@@ -238,6 +238,9 @@ def fixture_():
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
     # 用例执行前的环境搭建代码
+    # 获取session
+    session = get_session_()
+    # 清理环境
     try:
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
@@ -246,8 +249,6 @@ def fixture_():
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
         assert False, str(e)
-    # 获取session
-    session = get_session_()
     # 创建数据库
     create_database(session)
     # 创建时间序列

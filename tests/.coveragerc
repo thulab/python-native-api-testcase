@@ -7,3 +7,4 @@ omit =
     */__init__.py
     */read_write_io_utils.py
     */pair.py
+    */template/*
