@@ -10,6 +10,7 @@ from iotdb.utils.IoTDBConstants import TSDataType, TSEncoding, Compressor
 from iotdb.utils.Tablet import Tablet
 from iotdb.utils.NumpyTablet import NumpyTablet
 from datetime import date
+from iotdb.utils.Field import Field
 
 from iotdb.utils.exception import IoTDBConnectionException
 
@@ -283,7 +284,13 @@ def test_execute_query_statement():
         assert 1024 == session_data_set.get_fetch_size(), "The expected quantity is inconsistent with the actual quantity, expect: 1024, actual: " + str(
             session_data_set.get_fetch_size())
         while session_data_set.has_next():
-            session_data_set.next()
+            RowRecord = session_data_set.next()
+            RowRecord.set_timestamp(100)
+            assert 100 == RowRecord.get_timestamp(), "The expected quantity is inconsistent with the actual quantity, expect: 100, actual: " + str(
+                RowRecord.get_timestamp())
+            RowRecord.add_field(1, TSDataType.INT32)
+            RowRecord.set_field(10, Field(TSDataType.INT32, 42))
+            RowRecord.set_fields([Field(TSDataType.INT32, 42), Field(TSDataType.INT32, 42)])
         session_data_set.todf()
         session_data_set.close_operation_handle()
 

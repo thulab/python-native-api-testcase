@@ -1133,6 +1133,96 @@ def test_insert_aligned_tablets():
     assert expect == actual
 
 
+# # 测试往对齐时间序列写入多条 tablet 数据（无重定向）
+# @pytest.mark.usefixtures('fixture_')
+# def test_insert_aligned_tablets_close_redirection():
+#     with open(config_path, 'r', encoding='utf-8') as file:
+#         config = yaml.safe_load(file)
+#     if config['enable_cluster']:
+#         session1 = Session(config['host'], config['port'], config['username'], config['password'], enable_redirection=False)
+#         session1.open()
+#     else:
+#         pool_config = PoolConfig(
+#             node_urls=config['node_urls'],
+#             user_name=config['username'],
+#             password=config['password'],
+#             enable_redirection=False
+#         )
+#         max_pool_size = 10
+#         wait_timeout_in_ms = 100000
+#         session_pool1 = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
+#         session1 = session_pool.get_session()
+#         session1.open()
+#     # 1、普通 Tablet
+#     expect = 20
+#     device1_id = "root.tests.g3.d1"
+#     measurements_ = ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"]
+#     data_types = [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE,
+#                   TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+#     values_ = [
+#         [False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"],
+#         [True, -2147483648, -9223372036854775808, -0.12345678, -0.12345678901234567, "abcdefghijklmnopqrstuvwsyz",
+#          -9223372036854775808, date(1000, 1, 1), 'abcdefghijklmnopqrstuvwsyz'.encode('utf-8'),
+#          "abcdefghijklmnopqrstuvwsyz"],
+#         [True, 2147483647, 9223372036854775807, 0.123456789, 0.12345678901234567, "!@#$%^&*()_+}{|:'`~-=[];,./<>?~",
+#          9223372036854775807, date(9999, 12, 31), '!@#$%^&*()_+}{|:`~-=[];,./<>?~'.encode('utf-8'),
+#          "!@#$%^&*()_+}{|:`~-=[];,./<>?~"],
+#         [True, 1, 1, 1.0, 1.0, "没问题", 1, date(1970, 1, 1), '没问题'.encode('utf-8'), "没问题"],
+#         [True, -1, -1, 1.1234567, 1.1234567890123456, "！@#￥%……&*（）——|：“《》？·【】、；‘，。/", 11, date(1970, 1, 1),
+#          '！@#￥%……&*（）——|：“《》？·【】、；‘，。/'.encode('utf-8'), "！@#￥%……&*（）——|：“《》？·【】、；‘，。/"],
+#         [True, 10, 11, 4.123456, 4.123456789012345,
+#          "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:'`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题", 11,
+#          date(1970, 1, 1),
+#          '1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题'.encode(
+#              'utf-8'),
+#          "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题"],
+#         [True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'),
+#          "string01"],
+#         [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""],
+#         [True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "],
+#         [True, 10, 11, 1.1, 10011.1, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'), "string01"]
+#     ]
+#     timestamps_ = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+#     tablet1_ = Tablet(device1_id, measurements_, data_types, values_, timestamps_)
+#     device1_id = "root.tests.g3.d1"
+#     measurements_ = ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"]
+#     data_types = [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE,
+#                   TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+#     values_ = [
+#         [False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"],
+#         [True, -2147483648, -9223372036854775808, -0.12345678, -0.12345678901234567, "abcdefghijklmnopqrstuvwsyz",
+#          -9223372036854775808, date(1000, 1, 1), 'abcdefghijklmnopqrstuvwsyz'.encode('utf-8'),
+#          "abcdefghijklmnopqrstuvwsyz"],
+#         [True, 2147483647, 9223372036854775807, 0.123456789, 0.12345678901234567, "!@#$%^&*()_+}{|:'`~-=[];,./<>?~",
+#          9223372036854775807, date(9999, 12, 31), '!@#$%^&*()_+}{|:`~-=[];,./<>?~'.encode('utf-8'),
+#          "!@#$%^&*()_+}{|:`~-=[];,./<>?~"],
+#         [True, 1, 1, 1.0, 1.0, "没问题", 1, date(1970, 1, 1), '没问题'.encode('utf-8'), "没问题"],
+#         [True, -1, -1, 1.1234567, 1.1234567890123456, "！@#￥%……&*（）——|：“《》？·【】、；‘，。/", 11, date(1970, 1, 1),
+#          '！@#￥%……&*（）——|：“《》？·【】、；‘，。/'.encode('utf-8'), "！@#￥%……&*（）——|：“《》？·【】、；‘，。/"],
+#         [True, 10, 11, 4.123456, 4.123456789012345,
+#          "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:'`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题", 11,
+#          date(1970, 1, 1),
+#          '1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题'.encode(
+#              'utf-8'),
+#          "1234567890abcdefghijklmnopqrstuvwsyz!@#$%^&*()_+}{|:`~-=[];,./<>?~！@#￥%……&*（）——|：“《》？·【】、；‘，。/没问题"],
+#         [True, -10, -11, 12.12345, 12.12345678901234, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'),
+#          "string01"],
+#         [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""],
+#         [True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "],
+#         [True, 10, 11, 1.1, 10011.1, "test01", 11, date(1970, 1, 1), 'Hello, World!'.encode('utf-8'), "string01"]
+#     ]
+#     timestamps_ = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+#     tablet2_ = Tablet(device1_id, measurements_, data_types, values_, timestamps_)
+#
+#     tablet_lst = [tablet1_, tablet2_]
+#     session1.insert_aligned_tablets(tablet_lst)
+#     # 计算实际时间序列的行数量
+#     actual = query("select * from root.tests.g3.d1")
+#     # 判断是否符合预期
+#     assert expect == actual
+
+
+
 # 测试往非对齐时间序列写入一条 Record 数据
 @pytest.mark.usefixtures('fixture_')
 def test_insert_record():
@@ -1446,6 +1536,7 @@ def test_insert_aligned_records():
 @pytest.mark.usefixtures('fixture_')
 def test_insert_records_of_one_device():
     global session
+    #（1）测试插入各种数据类型和值
     expect = 9
     session.insert_records_of_one_device("root.tests.g1.d1",
                                          [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -1655,9 +1746,9 @@ def test_insert_str_record():
 
     expect2 = 1
     session.insert_str_record("root.tests.g5.d2",
-                                      1,
-                                      "BOOLEAN",
-                                      "true")
+                              1,
+                              "BOOLEAN",
+                              "true")
     # 计算实际时间序列的行数量
     actual2 = query("select * from root.tests.g5.d2")
     # 判断是否符合预期
@@ -1674,16 +1765,19 @@ def test_insert_str_record():
     # # 判断是否符合预期
     # assert expect3 == actual3
 
+
 # 测试带有类型推断的写入：写入单条对齐记录
 @pytest.mark.usefixtures('fixture_')
 def test_insert_aligned_str_record():
     global session
     expect1 = 1
     session.insert_aligned_str_record("root.tests.g5.d10",
-                              1,
-                              ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
-                              ["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01", 'b"x12x34"',
-                               "string01"])
+                                      1,
+                                      ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB",
+                                       "STRING"],
+                                      ["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01",
+                                       'b"x12x34"',
+                                       "string01"])
     # 计算实际时间序列的行数量
     actual1 = query("select * from root.tests.g5.d10")
     # 判断是否符合预期
@@ -1738,16 +1832,19 @@ def test_insert_string_records_of_one_device():
     # # 判断是否符合预期
     # assert expect2 == actual2
 
+
 # 测试带有类型推断的写入：往一个设备中写入多条对齐记录
 @pytest.mark.usefixtures('fixture_')
 def test_insert_aligned_string_records_of_one_device():
     global session
     expect1 = 1
     session.insert_aligned_string_records_of_one_device("root.tests.g5.d30", [0],
-                                                [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE",
-                                                  "BLOB", "STRING"]],
-                                                [["true", "10", "11", "11.11", "10011.1", "test01", "11", "1970-01-01",
-                                                  'b"x12x34"', "string01"]])
+                                                        [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS",
+                                                          "DATE",
+                                                          "BLOB", "STRING"]],
+                                                        [["true", "10", "11", "11.11", "10011.1", "test01", "11",
+                                                          "1970-01-01",
+                                                          'b"x12x34"', "string01"]])
     # 计算实际时间序列的行数量
     actual1 = query("select * from root.tests.g5.d30")
     # 判断是否符合预期
@@ -2838,7 +2935,8 @@ def test_insert_record():
                            'Hello, World!'.encode('utf-8'), "string01"])
     session.insert_record("root.tests.g1.d1", 8,
                           ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
-                          [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING],
+                          [TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE,
+                           TSDataType.TEXT, TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING],
                           [None, None, None, None, None, "", None, date(1970, 1, 1), ''.encode('utf-8'), ""])
     session.insert_record("root.tests.g1.d1", 9,
                           ["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS", "DATE", "BLOB", "STRING"],
@@ -3528,6 +3626,21 @@ def test_delete_data2():
     # 判断是否符合预期
     assert 0 == actual2
 
+
+# 测试检查顺序函数：check_sorted
+@pytest.mark.usefixtures('fixture_')
+def test_check_sorted():
+    global session
+    timestamps1_ = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert True == session.check_sorted(
+        timestamps1_), "The expected result is inconsistent with the actual result, expect: True, actual: " + str(
+        session.check_sorted(timestamps1_))
+    timestamps2_ = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    assert False == session.check_sorted(
+        timestamps2_), "The expected result is inconsistent with the actual result, expect: False, actual: " + str(
+        session.check_sorted(timestamps2_))
+
+
 #############异常情况#############
 # 1、测试带有类型推断的写入：往一个设备中写入多条记录
 @pytest.mark.usefixtures('fixture_')
@@ -3542,9 +3655,10 @@ def test_insert_string_records_of_one_device_error():
                                                       "1970-01-01",
                                                       'b"x12x34"', "string01"]])
     except Exception as e:
-        assert  isinstance(e, RuntimeError) and str(
+        assert isinstance(e, RuntimeError) and str(
             e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
             e).__name__ + ":" + str(e)
+
 
 # 2、测试带有类型推断的写入：往一个设备中写入多条对齐记录
 @pytest.mark.usefixtures('fixture_')
@@ -3552,16 +3666,18 @@ def test_insert_aligned_string_records_of_one_device_error():
     global session
     try:
         session.insert_aligned_string_records_of_one_device("root.tests.g5.d10", [0, 1],
-                                                    [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TS",
-                                                      "DATE",
-                                                      "BLOB", "STRING"]],
-                                                    [["true", "10", "11", "11.11", "10011.1", "test01", "11",
-                                                      "1970-01-01",
-                                                      'b"x12x34"', "string01"]])
+                                                            [["BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT",
+                                                              "TS",
+                                                              "DATE",
+                                                              "BLOB", "STRING"]],
+                                                            [["true", "10", "11", "11.11", "10011.1", "test01", "11",
+                                                              "1970-01-01",
+                                                              'b"x12x34"', "string01"]])
     except Exception as e:
-        assert  isinstance(e, RuntimeError) and str(
+        assert isinstance(e, RuntimeError) and str(
             e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
             e).__name__ + ":" + str(e)
+
 
 # 3、测试insert_records数量不一致情况
 @pytest.mark.usefixtures('fixture_')
@@ -3571,13 +3687,14 @@ def test_insert_records_error():
         session.insert_records(
             ["root.tests_insert_error3.d1"],
             [1, 2],
-            [["s1","s2"],["s1","s2"]],
-            [[TSDataType.BOOLEAN, TSDataType.INT32],[TSDataType.BOOLEAN, TSDataType.INT32]],
-            [[False, 0],[True, 1]])
+            [["s1", "s2"], ["s1", "s2"]],
+            [[TSDataType.BOOLEAN, TSDataType.INT32], [TSDataType.BOOLEAN, TSDataType.INT32]],
+            [[False, 0], [True, 1]])
     except Exception as e:
-        assert  isinstance(e, RuntimeError) and str(
+        assert isinstance(e, RuntimeError) and str(
             e) == "insert records of one device error: times, measurementsList and valuesList's size should be equal!", "期待报错信息与实际不一致，期待：RuntimeError: insert records of one device error: times, measurementsList and valuesList's size should be equal!，实际：" + type(
             e).__name__ + ":" + str(e)
+
 
 # 4、测试 insert_str_record 数量不一致情况
 @pytest.mark.usefixtures('fixture_')
@@ -3590,9 +3707,10 @@ def test_insert_str_record_error():
             ["s1"],
             ["False", "0"])
     except Exception as e:
-        assert  isinstance(e, RuntimeError) and str(
+        assert isinstance(e, RuntimeError) and str(
             e) == "length of measurements does not equal to length of values!", "期待报错信息与实际不一致，期待：RuntimeError: length of measurements does not equal to length of values!，实际：" + type(
             e).__name__ + ":" + str(e)
+
 
 # 5、测试 insert_record 数量不一致情况
 @pytest.mark.usefixtures('fixture_')
@@ -3606,21 +3724,8 @@ def test_insert_record_error():
             [TSDataType.BOOLEAN],
             ["False", "0"])
     except Exception as e:
-        assert  isinstance(e, RuntimeError) and str(
+        assert isinstance(e, RuntimeError) and str(
             e) == "length of data types does not equal to length of values!", "期待报错信息与实际不一致，期待：RuntimeError: length of data types does not equal to length of values!，实际：" + type(
             e).__name__ + ":" + str(e)
-
-
-# 6、测试 insert_aligned_records 设备为空情况 TODO：只打打印日志，不报错
-# @pytest.mark.usefixtures('fixture_')
-# def test_insert_aligned_records_error():
-#     global session
-#     session.insert_aligned_records(
-#         [],
-#         [1, 2],
-#         [["s1", "s2"], ["s1", "s2"]],
-#         [[TSDataType.BOOLEAN, TSDataType.INT32], [TSDataType.BOOLEAN, TSDataType.INT32]],
-#         [[False, 0], [True, 1]])
-
 
 
