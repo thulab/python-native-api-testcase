@@ -95,7 +95,11 @@ def fixture_():
         session_pool = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
         session = session_pool.get_session()
         session.open()
-        session.execute_non_query_statement("DELETE DATABASE root.**")
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
         session.close()
         session_pool.close()
     except Exception as e:
@@ -119,7 +123,11 @@ def fixture_():
         session_pool = SessionPool(pool_config, max_pool_size, wait_timeout_in_ms)
         session = session_pool.get_session()
         session.open()
-        session.execute_non_query_statement("DELETE DATABASE root.**")
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
         session.close()
         session_pool.close()
     except Exception as e:

@@ -245,8 +245,8 @@ def fixture_():
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
                 fields = session_data_set.next().get_fields()
-                if str(fields[0]) != "root.__system":
-                    session.execute_non_query_statement("drop database " + str(fields[0]))
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
     except Exception as e:
         assert False, str(e)
     # 创建数据库
@@ -261,8 +261,8 @@ def fixture_():
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
                 fields = session_data_set.next().get_fields()
-                if str(fields[0]) != "root.__system":
-                    session.execute_non_query_statement("drop database " + str(fields[0]))
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
     except Exception as e:
         assert False, str(e)
     if config['enable_cluster']:

@@ -46,7 +46,11 @@ def fixture_():
         session.open(False)
 
         # 清理环境
-        session.execute_non_query_statement("DELETE DATABASE root.**")
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
 
     except Exception as e:
         assert False, "There is an error:" + str(e)
@@ -56,7 +60,10 @@ def fixture_():
     try:
         session_data_set = session.execute_query_statement("show databases")
         if session_data_set.has_next():
-            session.execute_non_query_statement("DELETE DATABASE root.**")
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
 
         if config['enable_session_pool']:
             session_pool.put_back(session)

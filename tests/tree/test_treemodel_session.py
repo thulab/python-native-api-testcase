@@ -95,7 +95,11 @@ def fixture_():
         session.open()
 
         # 清理环境
-        session.execute_non_query_statement("DELETE DATABASE root.**")
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
 
         # 关闭 session
         session.close()
@@ -119,7 +123,11 @@ def fixture_():
         session.open()
 
         # 清理环境
-        session.execute_non_query_statement("DELETE DATABASE root.**")
+        with session.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "root.__system" and str(fields[0]) != "root.__audit":
+                    session.execute_non_query_statement("delete database " + str(fields[0]))
 
         # 关闭 session
         session.close()
