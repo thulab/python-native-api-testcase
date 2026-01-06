@@ -25,11 +25,20 @@ source venv/bin/activate
 2、安装需要的依赖
 
 ```bash
+# Ubuntu 22.04
 pip3 install numpy # Example源码需要的依赖
 pip3 install pytest # 使用自动化测试需要的
 pip3 install pyyaml # 使用yaml配置文件需要的
 pip3 install pytest-cov # 测试代码覆盖率需要的
 pip3 install pytest-html # 生成测试报告需要的
+
+# CentOS 7.9
+pip3 install pytest
+pip3 install pyyaml
+pip3 install pytest-html
+pip3 install numpy==1.25.2
+pip3 install pandas==2.0.3
+pip3 install greenlet==2.0.2
 ```
 
 3、安装IoTDB依赖
