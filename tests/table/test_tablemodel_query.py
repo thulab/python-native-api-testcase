@@ -1,6 +1,7 @@
 import datetime
 import pytest
 import yaml
+import logging
 from iotdb.table_session import TableSession, TableSessionConfig
 from iotdb.table_session_pool import TableSessionPoolConfig, TableSessionPool
 from iotdb.utils.IoTDBConstants import TSDataType
@@ -8,8 +9,6 @@ from iotdb.utils.Tablet import Tablet, ColumnType
 from datetime import date
 from iotdb.utils.Field import Field
 from iotdb.utils.exception import StatementExecutionException
-
-session = TableSession(TableSessionConfig())
 
 """
  Title：测试表模型查询接口
@@ -26,6 +25,8 @@ data_types = []
 column_types = []
 timestamps = []
 values = []
+session = None
+session_pool = None
 
 
 def read_config(file_path):
@@ -58,14 +59,14 @@ def get_session_():
         return session
 
 
-def create_database(session):
+def create_database(session_):
     # 创建数据库
-    session.execute_non_query_statement("create database " + database_name)
-    session.execute_non_query_statement("use " + database_name)
+    session_.execute_non_query_statement("create database " + database_name)
+    session_.execute_non_query_statement("use " + database_name)
 
 
-def create_table(session):
-    session.execute_non_query_statement(
+def create_table(session_):
+    session_.execute_non_query_statement(
         "create table table_b("
         'id1 STRING TAG, id2 STRING TAG, id3 STRING TAG, '
         'attr1 string attribute, attr2 string attribute, attr3 string attribute,'
@@ -74,7 +75,7 @@ def create_table(session):
     )
 
 
-def insert_data(session):
+def insert_data(session_):
     global column_names, data_types, column_types, timestamps, values
     # 1、一般写入
     table_name = "table_b"
@@ -158,7 +159,66 @@ def insert_data(session):
         ]
     ]
     tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
-    session.insert(tablet)
+    session_.insert(tablet)
+
+
+# 准备指定数量且特定表名的数据
+def read_data(session_, table_name, num):
+    # 准备元数据
+    session_.execute_non_query_statement("create database " + database_name)
+    session_.execute_non_query_statement("use " + database_name)
+    session_.execute_non_query_statement(
+        "create table " + table_name + "("
+                                       'id1 STRING TAG, id2 STRING TAG, id3 STRING TAG, '
+                                       'attr1 string attribute, attr2 string attribute, attr3 string attribute,'
+                                       'BOOLEAN BOOLEAN FIELD, INT32 INT32 FIELD, INT64 INT64 FIELD, FLOAT FLOAT FIELD, DOUBLE DOUBLE FIELD,'
+                                       'TEXT TEXT FIELD, TIMESTAMP TIMESTAMP FIELD, DATE DATE FIELD, BLOB BLOB FIELD, STRING STRING FIELD)'
+    )
+    # 写入数据
+    column_names = [
+        "id1", "id2", "id3",
+        "attr1", "attr2", "attr3",
+        "BOOLEAN", "INT32", "INT64", "FLOAT", "DOUBLE", "TEXT", "TIMESTAMP", "DATE", "BLOB", "STRING"]
+    data_types = [
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.STRING, TSDataType.STRING, TSDataType.STRING,
+        TSDataType.BOOLEAN, TSDataType.INT32, TSDataType.INT64, TSDataType.FLOAT, TSDataType.DOUBLE, TSDataType.TEXT,
+        TSDataType.TIMESTAMP, TSDataType.DATE, TSDataType.BLOB, TSDataType.STRING]
+    column_types = [
+        ColumnType.TAG, ColumnType.TAG, ColumnType.TAG,
+        ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE, ColumnType.ATTRIBUTE,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD,
+        ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD, ColumnType.FIELD]
+    timestamps = list(range(1, num + 1))
+    values = [
+        [
+            f"id1：{i}", f"id2：{i}", f"id3：{i}",
+            f"attr1:{i}", f"attr2:{i}", f"attr3:{i}",
+            i % 2 == 0, i, i * 1000, i * 1.0, i * 1.0, f"text{i}", i * 1000, date(1970, 1, 1),
+            f'text{i}'.encode('utf-8'), f"string{i}"
+        ] for i in range(1, num - 3 + 1)
+    ]
+    values.append(
+        [
+            "id1：98", "id2：98", "id3：98",
+            "attr1:98", "attr2:98", "attr3:98",
+            None, None, None, None, None, None, None, None, None, None
+        ])
+    values.append(
+        [
+            None, None, None,
+            None, None, None,
+            True, -0, -0, -0.0, -0.0, "    ", 11, date(1970, 1, 1), '    '.encode('utf-8'), "    "
+        ]
+    )
+    values.append(
+        [
+            None, None, None,
+            None, None, None,
+            None, None, None, None, None, None, None, None, None, None
+        ])
+    tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
+    session_.insert(tablet)
 
 
 @pytest.fixture()
@@ -174,10 +234,10 @@ def fixture_():
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
                 fields = session_data_set.next().get_fields()
-                if str(fields[0]) != "information_schema":
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
-        print(e)
+        assert False, str(e)
     # 创建数据库
     create_database(session)
     # 创建表
@@ -198,7 +258,7 @@ def fixture_():
         with session.execute_query_statement("show databases") as session_data_set:
             while session_data_set.has_next():
                 fields = session_data_set.next().get_fields()
-                if str(fields[0]) != "information_schema":
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
                     session.execute_non_query_statement("drop database " + str(fields[0]))
     except Exception as e:
         assert False, str(e)
@@ -236,6 +296,257 @@ def test_query1():
         session_data_set.close_operation_handle()
 
 
+# 测试查询分批返回 DataFrame 功能：当 SessionDataSet 总行数超过 fetchSize 时
+def test_query2():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+
+    row_num = 1000
+    fetch_size = 100
+
+    if config['enable_cluster']:
+        config = TableSessionConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=fetch_size,
+        )
+        session_test_query2 = TableSession(config)
+    else:
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=fetch_size,
+        )
+        session_pool_test_query2 = TableSessionPool(config)
+        session_test_query2 = session_pool_test_query2.get_session()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+    # 准备数据
+    read_data(session_test_query2, "table_test_query2", row_num)
+
+    # 测试 has_next_df 和 next_df
+    with session_test_query2.execute_query_statement(
+            "select * from table_test_query2 order by time") as session_data_set:
+        while session_data_set.has_next_df():
+            df = session_data_set.next_df()
+            assert df.shape[0] == fetch_size, f"Expected {fetch_size} rows, but got {df.shape[0]} rows"
+
+        # 会自动关闭
+        session_data_set.close_operation_handle()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+# 测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数小于 fetchSize 时
+def test_query3():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+
+    row_num = 30
+    fetch_size = 1000
+
+    if config['enable_cluster']:
+        config = TableSessionConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=fetch_size,
+        )
+        session_test_query2 = TableSession(config)
+    else:
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=fetch_size,
+        )
+        session_pool_test_query2 = TableSessionPool(config)
+        session_test_query2 = session_pool_test_query2.get_session()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+    # 准备数据
+    read_data(session_test_query2, "table_test_query2", row_num)
+
+    # 测试 has_next_df 和 next_df
+    with session_test_query2.execute_query_statement(
+            "select * from table_test_query2 order by time") as session_data_set:
+        while session_data_set.has_next_df():
+            df = session_data_set.next_df()
+            assert df.shape[0] == row_num, f"Expected {row_num} rows, but got {df.shape[0]} rows"
+
+        # 会自动关闭
+        session_data_set.close_operation_handle()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+# 测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数等于 fetchSize 时
+def test_query4():
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+
+    row_num = 1000
+
+    if config['enable_cluster']:
+        config = TableSessionConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=row_num,
+        )
+        session_test_query2 = TableSession(config)
+    else:
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=row_num,
+        )
+        session_pool_test_query2 = TableSessionPool(config)
+        session_test_query2 = session_pool_test_query2.get_session()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+    # 准备数据
+    read_data(session_test_query2, "table_test_query2", row_num)
+
+    # 测试 has_next_df 和 next_df
+    with session_test_query2.execute_query_statement(
+            "select * from table_test_query2 order by time") as session_data_set:
+        while session_data_set.has_next_df():
+            df = session_data_set.next_df()
+            assert df.shape[0] == row_num, f"Expected {row_num} rows, but got {df.shape[0]} rows"
+
+        # 会自动关闭
+        session_data_set.close_operation_handle()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+# 测试 fetchSize <= 0 的异常：Session 打印一个警告日志 ，fetchSize 重置为默认值 5000
+def test_query5():
+    # 设置日志捕获
+    log_capture = []
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.WARNING)
+    logger = logging.getLogger("IoTDB")
+    logger.addHandler(handler)
+    logger.setLevel(logging.WARNING)
+
+    def log_capture_func(record):
+        log_capture.append(record.getMessage())
+
+    handler.emit = log_capture_func
+    with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+
+    row_num = 10000
+
+    if config['enable_cluster']:
+        config = TableSessionConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=0,
+        )
+        session_test_query2 = TableSession(config)
+    else:
+        config = TableSessionPoolConfig(
+            node_urls=config['node_urls'],
+            username=config['username'],
+            password=config['password'],
+            fetch_size=0,
+        )
+        session_pool_test_query2 = TableSessionPool(config)
+        session_test_query2 = session_pool_test_query2.get_session()
+
+    # 验证日志是否被捕获
+    assert any("fetch_size 0 is illegal" in log for log in log_capture), "Expected warning log not found"
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+    # 准备数据
+    read_data(session_test_query2, "table_test_query2", row_num)
+
+    # 测试 has_next_df 和 next_df
+    with session_test_query2.execute_query_statement(
+            "select * from table_test_query2 order by time") as session_data_set:
+        while session_data_set.has_next_df():
+            df = session_data_set.next_df()
+            assert df.shape[0] == 5000, f"Expected {5000} rows, but got {df.shape[0]} rows"
+
+        # 会自动关闭
+        session_data_set.close_operation_handle()
+
+    # 清理残余数据库
+    try:
+        with session_test_query2.execute_query_statement("show databases") as session_data_set:
+            while session_data_set.has_next():
+                fields = session_data_set.next().get_fields()
+                if str(fields[0]) != "information_schema" and str(fields[0]) != "__audit":
+                    session_test_query2.execute_non_query_statement("drop database " + str(fields[0]))
+    except Exception as e:
+        assert False, str(e)
+
+
+
 # 测试fields查询：验证类型
 @pytest.mark.usefixtures('fixture_')
 def test_fields1():
@@ -253,7 +564,7 @@ def test_fields1():
                     row_record.get_fields()[col_index + 1].get_data_type())
 
 
-# 2、测试fields查询：验证字段值
+# 测试fields查询：验证字段值
 @pytest.mark.usefixtures('fixture_')
 def test_fields2():
     row_index = 0
@@ -262,7 +573,8 @@ def test_fields2():
         while session_data_set.has_next():
             row_record = session_data_set.next()
             # 1、测试time列的值
-            if 2147483647 <= timestamps[row_index] or timestamps[row_index] <= 0: # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
+            if 2147483647 <= timestamps[row_index] or timestamps[
+                row_index] <= 0:  # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
                 # 对于特殊时间戳值，只验证不为None
                 assert row_record.get_fields()[0].get_object_value(TSDataType.TIMESTAMP) is not None, \
                     "Actual time does not match, expected:" + str(timestamps[row_index]) + ", actual:" + str()
@@ -287,7 +599,7 @@ def test_fields2():
                     actual_value = row_record.get_fields()[col_index + 1].get_object_value(data_types[col_index])
                     if expected_value is not None:
                         # 处理特殊时间戳值
-                        if 2147483647 <= expected_value or expected_value <= 0: # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
+                        if 2147483647 <= expected_value or expected_value <= 0:  # TODO：待优化，fromtimestamp方法无法处理超过一定范围的时间戳
                             # 对于特殊时间戳值，只验证不为None
                             assert actual_value is not None, \
                                 "Actual value should not be None for special timestamp, expected:" + str(expected_value)
@@ -410,7 +722,7 @@ def test_fields2():
             row_index = row_index + 1
 
 
-# 3、测试fields查询：测试is_null、copy和set_xxx_value等方法有效性
+# 测试fields查询：测试is_null、copy和set_xxx_value等方法有效性
 @pytest.mark.usefixtures('fixture_')
 def test_fields3():
     row_index = 0
@@ -455,7 +767,7 @@ def test_fields3():
 
 ################## 异常情况 ##################
 
-# 1、测试fields查询，get_XXX_value异常情况
+# 测试fields查询， get_XXX_valu e异常情况
 @pytest.mark.usefixtures('fixture_')
 def test_fields_error1():
     field = Field(None, None)
@@ -526,12 +838,13 @@ def test_fields_error1():
             e).__name__ + ":" + str(e)
 
 
-# 2、StatementExecutionException异常
+# 测试 StatementExecutionException 异常
 @pytest.mark.usefixtures('fixture_')
-def test_query_error2():
+def test_query_error1():
     try:
         session.execute_query_statement("StatementExecutionException")
         assert False, "期待报错，实际无报错"
     except Exception as e:
         assert isinstance(e, StatementExecutionException) and "StatementExecutionException" in str(
             e), "期待报错信息与实际不一致，期待：StatementExecutionException: ，实际：" + type(e).__name__ + ":" + str(e)
+
