@@ -25,7 +25,7 @@ from iotdb.utils.exception import IoTDBConnectionException
  Date：2025/8/1
 """
 
-config_path = str(Path(__file__).resolve().parents[2] / "conf" / "config.yml")
+config_path = "../conf/config.yml"
 
 # 读取配置文件
 def read_config(file_path):
