@@ -2,6 +2,9 @@ import numpy as np
 import pytest
 import yaml
 import os
+import time
+import uuid
+from pathlib import Path
 from datetime import date
 from iotdb.table_session import TableSession, TableSessionConfig
 from iotdb.Session import Session
@@ -22,7 +25,7 @@ from iotdb.utils.exception import IoTDBConnectionException
  Date：2025/8/1
 """
 
-config_path = "../conf/config.yml"
+config_path = str(Path(__file__).resolve().parents[2] / "conf" / "config.yml")
 
 # 读取配置文件
 def read_config(file_path):
@@ -30,15 +33,109 @@ def read_config(file_path):
         return yaml.safe_load(file)
 
 
+def make_database_name(prefix):
+    return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+
+def execute_with_retry(session, statement, retries=20, delay=1):
+    last_error = None
+    transient_parts = [
+        "already exists",
+        "doesn't exist",
+        "does not exist",
+        "is not exists",
+        "Unknown database",
+        "deleting database",
+        "no available",
+        "please retry",
+        "Create SchemaPartition failed",
+        "Create DataPartition failed",
+        "operating table under the database",
+    ]
+    for _ in range(retries):
+        try:
+            return session.execute_non_query_statement(statement)
+        except Exception as e:
+            last_error = e
+            if not any(part in str(e) for part in transient_parts):
+                raise
+            time.sleep(delay)
+    raise last_error
+
+
+def drop_database_if_exists(session, database_name, retries=20, delay=1):
+    for _ in range(retries):
+        try:
+            session.execute_non_query_statement("use information_schema")
+        except Exception:
+            pass
+        try:
+            session.execute_non_query_statement("drop database " + database_name)
+            time.sleep(delay)
+            return
+        except Exception as e:
+            message = str(e)
+            if "doesn't exist" in message or "Unknown database" in message:
+                return
+            time.sleep(delay)
+
+
+def prepare_database(session, database_name, use_database=True):
+    drop_database_if_exists(session, database_name)
+    execute_with_retry(session, "create database " + database_name)
+    for _ in range(20):
+        with session.execute_query_statement("show databases") as session_data_set:
+            names = []
+            while session_data_set.has_next():
+                names.append(str(session_data_set.next().get_fields()[0]))
+        if database_name in names:
+            break
+        time.sleep(1)
+    if use_database:
+        execute_with_retry(session, "use " + database_name)
+
+
+def insert_with_retry(session, tablet, retries=20, delay=1):
+    last_error = None
+    for _ in range(retries):
+        try:
+            session.insert(tablet)
+            return
+        except Exception as e:
+            last_error = e
+            message = str(e)
+            if "305" not in message and "does not exist" not in message and "no available" not in message and "Create SchemaPartition failed" not in message:
+                raise
+            time.sleep(delay)
+    raise last_error
+
+
+def query_row_count_with_retry(session, table_name, retries=20, delay=1):
+    last_error = None
+    for _ in range(retries):
+        try:
+            actual = 0
+            with session.execute_query_statement("select * from " + table_name + " order by time") as session_data_set:
+                while session_data_set.has_next():
+                    session_data_set.next()
+                    actual = actual + 1
+            return actual
+        except Exception as e:
+            last_error = e
+            if "does not exist" not in str(e):
+                raise
+            time.sleep(delay)
+    raise last_error
+
+
 # 验证Session有效性
 def check_session_validity1(session):
     expect = 0
     actual = 0
-    database_name = "test_tablemodel_session"
+    database_name = make_database_name("test_tablemodel_session")
     table_name = "table1"
-    session.execute_non_query_statement("create database " + database_name)
-    session.execute_non_query_statement("use " + database_name)
-    session.execute_non_query_statement(
+    prepare_database(session, database_name)
+    execute_with_retry(session,
         "create table " + table_name + "("
                                        'id1 STRING TAG, id2 STRING TAG, id3 STRING TAG, '
                                        'attr1 string attribute, attr2 string attribute, attr3 string attribute,'
@@ -70,15 +167,13 @@ def check_session_validity1(session):
             False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"])
         expect = expect + 1
 
+    time.sleep(1)
     tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
-    session.insert(tablet)
-    with session.execute_query_statement("select * from " + table_name + " order by time") as session_data_set:
-        while session_data_set.has_next():
-            session_data_set.next()
-            actual = actual + 1
+    insert_with_retry(session, tablet)
+    actual = query_row_count_with_retry(session, table_name)
 
     assert expect == actual, "期待数量和实际数量不一致，期待：" + str(expect) + "，实际：" + str(actual)
-    session.execute_non_query_statement("drop database " + database_name)
+    drop_database_if_exists(session, database_name)
 
 
 # 验证Session有效性：session已经指定数据库
@@ -86,9 +181,8 @@ def check_session_validity2(session, database_name):
     expect = 0
     actual = 0
     table_name = "table1"
-    session.execute_non_query_statement("create database " + database_name)
-    # session.execute_non_query_statement("use " + database_name)
-    session.execute_non_query_statement(
+    execute_with_retry(session, "use " + database_name)
+    execute_with_retry(session,
         "create table " + table_name + "("
                                        'id1 STRING TAG, id2 STRING TAG, id3 STRING TAG, '
                                        'attr1 string attribute, attr2 string attribute, attr3 string attribute,'
@@ -120,15 +214,13 @@ def check_session_validity2(session, database_name):
             False, 0, 0, 0.0, 0.0, "1234567890", 0, date(1970, 1, 1), '1234567890'.encode('utf-8'), "1234567890"])
         expect = expect + 1
 
+    time.sleep(1)
     tablet = Tablet(table_name, column_names, data_types, values, timestamps, column_types)
-    session.insert(tablet)
-    with session.execute_query_statement("select * from " + table_name + " order by time") as session_data_set:
-        while session_data_set.has_next():
-            session_data_set.next()
-            actual = actual + 1
+    insert_with_retry(session, tablet)
+    actual = query_row_count_with_retry(session, table_name)
 
     assert expect == actual, "期待数量和实际数量不一致，期待：" + str(expect) + "，实际：" + str(actual)
-    session.execute_non_query_statement("drop database " + database_name)
+    drop_database_if_exists(session, database_name)
 
 
 # 测试 fixture：测试环境清理
@@ -182,7 +274,17 @@ def test_session2():
     with open(config_path, 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
-    database_name = "test_session2"
+    database_name = make_database_name("test_session2")
+    bootstrap_config = TableSessionPoolConfig(
+        node_urls=config['node_urls'],
+        username=config['username'],
+        password=config['password'],
+    )
+    bootstrap_pool = TableSessionPool(bootstrap_config)
+    bootstrap_session = bootstrap_pool.get_session()
+    prepare_database(bootstrap_session, database_name, use_database=False)
+    bootstrap_session.close()
+    bootstrap_pool.close()
 
     config = TableSessionPoolConfig(
         node_urls=config['node_urls'],

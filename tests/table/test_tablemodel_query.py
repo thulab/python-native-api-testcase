@@ -848,3 +848,353 @@ def test_query_error1():
         assert isinstance(e, StatementExecutionException) and "StatementExecutionException" in str(
             e), "期待报错信息与实际不一致，期待：StatementExecutionException: ，实际：" + type(e).__name__ + ":" + str(e)
 
+# ===== merged from test_utils_field_rowrecord.py =====
+import pandas as pd
+import pytest
+
+from iotdb.utils.Field import Field
+from iotdb.utils.IoTDBConstants import TSDataType
+from iotdb.utils.RowRecord import RowRecord
+
+
+class UnknownType:
+    pass
+
+
+def test_field_value_accessors_and_copy():
+    ts = Field(TSDataType.TIMESTAMP, 1, timezone="UTC", precision="ms")
+    date_field = Field(TSDataType.DATE, 20240417)
+    object_field = Field(TSDataType.OBJECT, b"hello")
+
+    assert Field.copy(Field(TSDataType.BOOLEAN, True)).get_bool_value() is True
+    assert int(Field.copy(Field(TSDataType.INT32, 7)).get_int_value()) == 7
+    assert int(Field.copy(Field(TSDataType.INT64, 8)).get_long_value()) == 8
+    assert float(Field.copy(Field(TSDataType.FLOAT, 1.5)).get_float_value()) == pytest.approx(1.5)
+    assert float(Field.copy(Field(TSDataType.DOUBLE, 2.5)).get_double_value()) == pytest.approx(2.5)
+    assert Field.copy(Field(TSDataType.TEXT, b"abc")).get_string_value() == "abc"
+    assert Field.copy(Field(TSDataType.STRING, b"xyz")).get_object_value(TSDataType.STRING) == "xyz"
+    assert Field.copy(Field(TSDataType.BLOB, b"\x01\x02")).get_binary_value() == b"\x01\x02"
+    assert object_field.get_string_value() == "hello"
+    assert object_field.get_object_value(TSDataType.OBJECT) == "hello"
+    assert ts.get_string_value().startswith("1970-01-01T00:00:00.001")
+    assert date_field.get_date_value() is not None
+
+
+def test_field_null_and_error_paths():
+    assert Field.get_field(None, TSDataType.INT32) is None
+    assert Field.get_field(pd.NA, TSDataType.INT32) is None
+
+    null_field = Field(None)
+    assert null_field.is_null()
+    assert null_field.get_string_value() == "None"
+
+    with pytest.raises(Exception):
+        null_field.get_bool_value()
+
+    with pytest.raises(RuntimeError):
+        Field(TSDataType.OBJECT, b"payload").get_binary_value()
+
+    with pytest.raises(RuntimeError):
+        Field(TSDataType.INT32, 1).get_object_value(UnknownType())
+
+    text_field = Field(TSDataType.TEXT, b"abc")
+    assert text_field.get_bool_value() is None
+    assert text_field.get_int_value() is None
+    assert text_field.get_long_value() is None
+    assert text_field.get_float_value() is None
+    assert text_field.get_double_value() is None
+    assert text_field.get_binary_value() == b"abc"
+    assert text_field.get_timestamp_value() is None
+    assert text_field.get_date_value() is None
+
+    with pytest.raises(Exception):
+        Field.copy(Field(UnknownType(), 1))
+
+
+def test_row_record_str_and_mutation():
+    record = RowRecord(
+        100,
+        [
+            Field(TSDataType.INT32, 7),
+            Field(TSDataType.TEXT, b"alpha"),
+        ],
+    )
+    record.add_field(b"payload", TSDataType.OBJECT)
+    record.set_field(0, Field(TSDataType.INT32, 9))
+    record.set_timestamp(200)
+
+    assert record.get_timestamp() == 200
+    assert [field.get_string_value() for field in record.get_fields()] == [
+        "9",
+        "alpha",
+        "payload",
+    ]
+    assert str(record) == "200\t\t9\t\talpha\t\tpayload"
+
+# ===== merged from test_utils_iotdb_rpc_dataset.py =====
+from types import SimpleNamespace
+
+import numpy as np
+import pandas as pd
+import pytest
+
+from iotdb.utils.IoTDBConstants import TSDataType
+from iotdb.utils.iotdb_rpc_dataset import IoTDBRpcDataSet
+
+
+class FakeClient:
+    def __init__(self, response):
+        self.response = response
+        self.close_requests = []
+        self.fetch_requests = []
+
+    def fetchResultsV2(self, request):
+        self.fetch_requests.append(request)
+        return self.response
+
+    def closeOperation(self, request):
+        self.close_requests.append(request)
+        return SimpleNamespace(message="closed")
+
+
+def fake_deserialize_factory():
+    calls = {"count": 0}
+
+    def fake_deserialize(_):
+        calls["count"] += 1
+        if calls["count"] == 1:
+            return (
+                np.array([1, 2], dtype=">i8"),
+                [
+                    np.array([True, False], dtype="?"),
+                    np.array([1, 2], dtype=">i4"),
+                    np.array([1.5, 2.5], dtype=">f4"),
+                    np.array([b"aa", b"bb"], dtype=object),
+                    np.array([1000, 2000], dtype=">i8"),
+                    np.array([20240416, 20240417], dtype=">i4"),
+                    np.array([b"x", b"y"], dtype=object),
+                ],
+                [None, None, None, None, None, None, None],
+                2,
+            )
+        return (
+            np.array([3, 4], dtype=">i8"),
+                [
+                    np.array([False, True], dtype="?"),
+                    np.array([3, 4], dtype=">i4"),
+                    np.array([3.5, 4.5], dtype=">f4"),
+                    np.array([b"cc", b"dd"], dtype=object),
+                    np.array([3000, 4000], dtype=">i8"),
+                    np.array([20240418, 20240419], dtype=">i4"),
+                    np.array([b"z", b"w"], dtype=object),
+                ],
+            [None, None, None, None, None, None, None],
+            2,
+        )
+
+    return fake_deserialize
+
+
+def build_dataset(monkeypatch, query_result, fetch_size=2, more_data=False, ignore_timestamp=False):
+    monkeypatch.setattr("iotdb.utils.iotdb_rpc_dataset.deserialize", fake_deserialize_factory())
+    return IoTDBRpcDataSet(
+        "select * from t",
+        ["flag", "count", "ratio", "txt", "ts", "day", "obj"],
+        ["BOOLEAN", "INT32", "FLOAT", "TEXT", "TIMESTAMP", "DATE", "OBJECT"],
+        ignore_timestamp,
+        more_data,
+        1,
+        FakeClient(SimpleNamespace(code=200, message="ok", moreData=False, hasResultSet=True, queryResult=query_result)),
+        2,
+        3,
+        query_result,
+        fetch_size,
+        10,
+        "UTC",
+        "ms",
+        None,
+    )
+
+
+def test_dataset_next_and_dataframe_building(monkeypatch):
+    dataset = build_dataset(monkeypatch, [b"chunk-1"], fetch_size=2)
+    assert dataset.next() is True
+    assert isinstance(dataset.data_frame, pd.DataFrame)
+    assert list(dataset.data_frame.columns) == list(range(8))
+    assert dataset.has_cached_result() is True
+
+    dataset.construct_one_data_frame()
+    assert dataset.has_cached_result() is True
+    assert dataset.find_column_name_by_index(1) == "Time"
+    with pytest.raises(Exception):
+        dataset.find_column_name_by_index(0)
+    with pytest.raises(Exception):
+        dataset.find_column_name_by_index(99)
+
+
+def test_dataset_next_dataframe_and_buffering(monkeypatch):
+    dataset = build_dataset(monkeypatch, [b"chunk-1"], fetch_size=1)
+    first = dataset.next_dataframe()
+    second = dataset.next_dataframe()
+
+    assert list(first["flag"]) == [True]
+    assert list(second["flag"]) == [False]
+    assert dataset._has_buffered_data() is False
+
+
+def test_dataset_result_set_to_pandas_fetch_and_close(monkeypatch):
+    response = SimpleNamespace(
+        status=SimpleNamespace(code=200, message="ok", subStatus=None, redirectNode=None),
+        moreData=False,
+        hasResultSet=True,
+        queryResult=[b"chunk-1"],
+    )
+    client = FakeClient(response)
+    dataset = IoTDBRpcDataSet(
+        "select * from t",
+        ["flag"],
+        ["BOOLEAN"],
+        False,
+        True,
+        1,
+        client,
+        2,
+        3,
+        [b"chunk-1"],
+        2,
+        10,
+        "UTC",
+        "ms",
+        None,
+    )
+
+    monkeypatch.setattr("iotdb.utils.iotdb_rpc_dataset.deserialize", fake_deserialize_factory())
+    assert dataset.fetch_results() is True
+    assert client.fetch_requests
+    assert dataset.result_set_to_pandas().shape[0] == 2
+    dataset.close()
+    assert client.close_requests
+    dataset.close()
+
+# ===== merged from test_utils_session_dataset.py =====
+from types import SimpleNamespace
+
+import pandas as pd
+import pytest
+
+from iotdb.utils.Field import Field
+from iotdb.utils.IoTDBConstants import TSDataType
+from iotdb.utils.RowRecord import RowRecord
+from iotdb.utils.SessionDataSet import SessionDataSet, get_typed_point
+
+
+class FakeRpcDataSet:
+    def __init__(self, *args):
+        self.ignore_timestamp = args[3]
+        self.fetch_size = args[10]
+        self.has_cached_data_frame = False
+        self.data_frame = None
+        self.closed = False
+        self.buffered = False
+        self.more_result = False
+        self.column_names = ["obj"] if self.ignore_timestamp else ["Time", "obj"]
+        self.column_types = [TSDataType.TEXT] if self.ignore_timestamp else [TSDataType.INT64, TSDataType.TEXT]
+        self.next_dataframe_calls = 0
+
+    def get_column_types(self):
+        return self.column_types
+
+    def get_column_names(self):
+        return self.column_names
+
+    def next(self):
+        if self.data_frame is None:
+            if self.ignore_timestamp:
+                self.data_frame = pd.DataFrame({"obj": [b"alpha", b"beta"]})
+            else:
+                self.data_frame = pd.DataFrame({"Time": [100, 200], "obj": [b"alpha", b"beta"]})
+        self.has_cached_data_frame = True
+        return True
+
+    def close(self):
+        self.closed = True
+
+    def _has_buffered_data(self):
+        return self.buffered
+
+    def _has_next_result_set(self):
+        return self.more_result
+
+    def next_dataframe(self):
+        self.next_dataframe_calls += 1
+        return pd.DataFrame({"obj": [b"chunk-1", b"chunk-2"]})
+
+    def result_set_to_pandas(self):
+        return pd.DataFrame({"obj": [b"alpha"]})
+
+    def get_fetch_size(self):
+        return self.fetch_size
+
+    def set_fetch_size(self, fetch_size):
+        self.fetch_size = fetch_size
+
+
+def build_session(monkeypatch, ignore_timestamp=False):
+    monkeypatch.setattr("iotdb.utils.SessionDataSet.IoTDBRpcDataSet", FakeRpcDataSet)
+    return SessionDataSet(
+        "select * from root",
+        ["Time", "obj"],
+        ["INT64", "TEXT"],
+        None,
+        1,
+        2,
+        object(),
+        3,
+        [],
+        ignore_timestamp,
+        10,
+        False,
+        2,
+        "UTC",
+        "ms",
+        None,
+    )
+
+
+def test_session_dataset_row_record_and_dataframe_helpers(monkeypatch):
+    dataset = build_session(monkeypatch, ignore_timestamp=False)
+    assert dataset.get_column_names() == ["Time", "obj"]
+    assert dataset.get_column_types() == [TSDataType.INT64, TSDataType.TEXT]
+    assert dataset.get_fetch_size() == 2
+
+    assert dataset.has_next() is True
+    record = dataset.next()
+    assert isinstance(record, RowRecord)
+    assert record.get_timestamp() == 100
+    assert record.get_fields()[0].get_string_value() == "alpha"
+
+    dataset.iotdb_rpc_data_set.buffered = True
+    dataset.iotdb_rpc_data_set.more_result = True
+    assert dataset.has_next_df() is True
+    assert list(dataset.next_df()["obj"]) == [b"chunk-1", b"chunk-2"]
+    assert dataset.todf().equals(pd.DataFrame({"obj": [b"alpha"]}))
+
+    dataset.close_operation_handle()
+    assert dataset.iotdb_rpc_data_set.closed is True
+
+
+def test_session_dataset_ignore_timestamp_and_typed_point(monkeypatch):
+    dataset = build_session(monkeypatch, ignore_timestamp=True)
+    record = dataset.next()
+    assert isinstance(record, RowRecord)
+    assert record.get_timestamp() == 0
+    assert record.get_fields()[0].get_string_value() == "alpha"
+
+    assert get_typed_point(Field(TSDataType.BOOLEAN, True)) == 1
+    assert get_typed_point(Field(TSDataType.TEXT, b"abc")) == "abc"
+    assert get_typed_point(Field(TSDataType.FLOAT, 1.5)) == pytest.approx(1.5)
+    assert get_typed_point(Field(None), none_value="missing") == "missing"
+
+    with pytest.raises(Exception):
+        get_typed_point(Field(object(), 1))
+
