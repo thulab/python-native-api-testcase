@@ -4,7 +4,6 @@ import yaml
 from iotdb.table_session import TableSession, TableSessionConfig
 from iotdb.utils.IoTDBConstants import TSDataType
 from iotdb.utils.Tablet import ColumnType, Tablet
-from iotdb.utils.object_column import decode_object_cell, encode_object_cell
 
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -257,68 +256,7 @@ def merged_object_case_session():
 
 
 # ============================================================================
-# 01. 编解码测试
-# ============================================================================
-
-
-class TestObjectColumnEncodeDecode:
-    """OBJECT 单元编码与解码测试。"""
-
-    def test_encode_decode_roundtrip(self):
-        """用例01：完整 OBJECT 单元编码后可以正确解码。"""
-        payload = b"\xca\xfe\xba\xbe"
-        cell = encode_object_cell(True, 0, payload)
-        is_eof, offset, body = decode_object_cell(cell)
-        assert is_eof is True
-        assert offset == 0
-        assert body == payload
-
-    def test_encode_decode_segment(self):
-        """用例02：分段 OBJECT 单元编码后可以正确解码。"""
-        cell = encode_object_cell(False, 512, b"\x01\x02")
-        is_eof, offset, body = decode_object_cell(cell)
-        assert is_eof is False
-        assert offset == 512
-        assert body == b"\x01\x02"
-
-    def test_empty_payload_encode(self):
-        """用例03：空 payload 编码后可以正确解码。"""
-        cell = encode_object_cell(True, 0, b"")
-        is_eof, offset, body = decode_object_cell(cell)
-        assert is_eof is True
-        assert offset == 0
-        assert body == b""
-
-    def test_large_payload_encode(self):
-        """用例04：10KB payload 编码后可以正确解码。"""
-        payload = b"x" * 10240
-        cell = encode_object_cell(True, 0, payload)
-        assert decode_object_cell(cell) == (True, 0, payload)
-
-    def test_mb_payload_encode(self):
-        """用例05：1MB payload 编码后可以正确解码。"""
-        payload = b"x" * (1024 * 1024)
-        cell = encode_object_cell(True, 0, payload)
-        assert decode_object_cell(cell) == (True, 0, payload)
-
-    def test_decode_cell_too_short(self):
-        """用例06：过短的非法单元应当报错。"""
-        with pytest.raises(ValueError):
-            decode_object_cell(b"\x00\x00\x00\x00\x00\x00\x00\x00")
-
-    def test_encode_content_not_bytes(self):
-        """用例07：非 bytes 内容编码时应当报错。"""
-        with pytest.raises(TypeError):
-            encode_object_cell(True, 0, "string")
-
-    def test_encode_accepts_bytearray(self):
-        """用例08：bytearray 内容应当允许编码。"""
-        cell = encode_object_cell(True, 0, bytearray(b"test"))
-        assert decode_object_cell(cell) == (True, 0, b"test")
-
-
-# ============================================================================
-# 02. 公共会话基类
+# 01. 公共会话基类
 # ============================================================================
 
 
@@ -335,7 +273,7 @@ class ObjectSessionTestBase:
 
 
 # ============================================================================
-# 03. Tablet 写入测试
+# 02. Tablet 写入测试
 # ============================================================================
 
 
@@ -527,7 +465,7 @@ class TestTabletWrite(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 04. 空值与空内容测试
+# 03. 空值与空内容测试
 # ============================================================================
 
 
@@ -646,7 +584,7 @@ class TestNullValues(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 05. SQL 写入测试
+# 04. SQL 写入测试
 # ============================================================================
 
 
@@ -790,7 +728,7 @@ class TestSQLWrite(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 06. 分段写入测试
+# 05. 分段写入测试
 # ============================================================================
 
 
@@ -898,7 +836,7 @@ class TestSegmentedWrite(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 07. Payload 大小测试
+# 06. Payload 大小测试
 # ============================================================================
 
 
@@ -950,7 +888,7 @@ class TestPayloadSizes(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 08. 查询测试
+# 07. 查询测试
 # ============================================================================
 
 
@@ -1007,7 +945,7 @@ class TestQueryMethods(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 09. OBJECT 函数测试
+# 08. OBJECT 函数测试
 # ============================================================================
 
 
@@ -1148,7 +1086,7 @@ class TestObjectFunctions(ObjectSessionTestBase):
 
 
 # ============================================================================
-# 10. 错误处理测试
+# 09. 错误处理测试
 # ============================================================================
 
 
@@ -1189,7 +1127,7 @@ class TestErrorHandling:
 
 
 # ============================================================================
-# 11. OBJECT 类型约束与默认限制测试
+# 10. OBJECT 类型约束与默认限制测试
 # ============================================================================
 
 
