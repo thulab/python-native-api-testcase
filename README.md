@@ -74,7 +74,7 @@ python -m pip install /path/to/apache_iotdb-*.whl
 git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
 python -m pip install build
-./release.sh # 需要在支持 shell script 的环境中执行；如果你是在 Windows 中操作，请改用 Git Bash、WSL 或其他可执行 shell 脚本的环境
+./release.sh # 仅支持在Linux/MacOS环境运行，若是需要在Windows环境运行，请自行在支持的环境编译后，再放到Windows环境安装
 cd <python-native-api-testcase>
 python -m pip install /path/to/apache_iotdb-*.whl
 ```
