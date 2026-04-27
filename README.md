@@ -1,91 +1,147 @@
 # Python 原生接口测试工具使用说明
 
-----
+本仓库用于验证 Apache IoTDB Python native API
+
+## 目录
+
+- [项目说明](#项目说明)
+- [环境](#环境)
+- [安装](#安装)
+- [配置说明](#配置说明)
+- [执行测试](#执行测试)
+- [条件性测试说明](#条件性测试说明)
+- [用例命名约定](#用例命名约定)
+
+## 项目结构
+
+项目中的主要目录和文件如下：
+
+```text
+python-native-api-testcase/        # 仓库根目录
+├─ assets/                         # README 或其他说明文档使用的图片资源
+├─ conf/                           # 测试运行配置目录
+│  └─ config.yml                   # IoTDB 连接配置，包含单机/集群、账号、SSL、压缩、超时等参数
+├─ example/                        # Python native API 示例代码
+│  ├─ table/                       # 表模型示例
+│  └─ tree/                        # 树模型示例
+├─ tests/                          # pytest 测试目录
+│  ├─ table/                       # 表模型测试用例，覆盖 TableSession、TableSessionPool、写入、查询等场景
+│  ├─ tree/                        # 树模型测试用例，覆盖 Session、SessionPool、数据库、写入、查询、时间序列等场景
+│  └─ .coveragerc                  # 覆盖率统计配置文件
+├─ README.md                       # 项目使用说明
+└─ requirements-dev.txt            # 本仓库测试和报告生成依赖
+```
 
 ## 环境
 
-- python 3.11+ （测试时使用的是 3.12.9）
+- Python 3.11+
 - pip3
-- thrift 0.13+ （测试使用的是0.22.0）
+- thrift 0.13+
+
+> 本测试程序适用于 Ubuntu/MacOS 或者 Windows 操作系统
 
 ## 安装
 
-**确保python环境已经配置好**
-
-1、创建虚拟环境并激活
+### 1. 创建虚拟环境并激活
 
 ```bash
-python3 -m venv venv
+python -m venv venv
+
 # Windows
 .\venv\Scripts\activate
-# linux
+
+# Linux / macOS
 source venv/bin/activate
 ```
 
-2、安装需要的依赖
+### 2. 安装测试依赖
 
 ```bash
-# Ubuntu 22.04
-pip3 install numpy # Example源码需要的依赖
-pip3 install pytest # 使用自动化测试需要的
-pip3 install pyyaml # 使用yaml配置文件需要的
-pip3 install pytest-cov # 测试代码覆盖率需要的
-pip3 install pytest-html # 生成测试报告需要的
-
-# CentOS 7.9
-pip3 install pytest
-pip3 install pyyaml
-pip3 install pytest-html
-pip3 install numpy==1.25.2
-pip3 install pandas==2.0.3
-pip3 install greenlet==2.0.2
+python -m pip install -r requirements-dev.txt
 ```
 
-3、安装IoTDB依赖
+### 3. 安装 Apache IoTDB Python 客户端依赖
+
+如果你已经有可用的 `apache-iotdb` wheel，直接安装即可：
 
 ```bash
-# 1、拉取源码
+python -m pip install /path/to/apache_iotdb-*.whl
+```
+
+没有的话需要从 IoTDB 源码构建：
+
+```bash
 git clone https://github.com/apache/iotdb.git
 cd iotdb/iotdb-client/client-py
-# 2、安装需要的模块
-pip3 install build
-# 3、编译
-./release.sh
-# 4、引入依赖
-cd ${python-native-api-testcase}
-pip3 install ${iotdb}/iotdb-client/client-py/dist/apache_iotdb-*.dev0-py3-none-any.whl 
-# 卸载之前的：pip3 uninstall apache-iotdb
+python -m pip install build
+./release.sh # 需要在支持 shell script 的环境中执行；如果你是在 Windows 中操作，请改用 Git Bash、WSL 或其他可执行 shell 脚本的环境
+cd <python-native-api-testcase>
+python -m pip install /path/to/apache_iotdb-*.whl
 ```
+
+> 如需替换已有版本，可先执行 `python -m pip uninstall apache-iotdb` 卸载旧版本后，再重新安装
+
+## 配置说明
+
+测试默认读取的配置文件为：[`conf/config.yml`](conf/config.yml)。
+
+当前配置项说明如下：
+
+| 配置项 | 说明 |
+| --- | --- |
+| `enable_cluster` | 是否按集群模式连接 |
+| `enable_session_pool` | 是否在部分测试中使用 `SessionPool` 分支 |
+| `host` | 单机模式主机地址 |
+| `port` | 单机模式端口 |
+| `username` | 用户名，默认 `root` |
+| `password` | 密码，默认 `root` |
+| `node_urls` | 集群模式节点列表，格式如 `127.0.0.1:6667` |
+| `use_ssl` | 是否启用 SSL 连接 |
+| `ca_certs` | SSL 证书路径 |
+| `enable_compression` | 是否启用 RPC 压缩 |
+| `connection_timeout_in_ms` | 连接超时时间，单位毫秒 |
 
 ## 使用
 
-确认config配置文件正确：`${python-native-api-testcase}/config.yml`
-
-- 基础自动化测试
+### 功能测试
 
 ```bash
-cd ${python-client-test}/tests
+# 测试代码中的配置文件路径写法是相对 `tests` 目录的，因此请先进入该目录
+cd tests
+# 全量执行
 pytest
-# 生成测试报告
+# 按测试模型执行
+pytest tree
+pytest table
+# 按文件执行
+pytest tree/test_treemodel_session.py
+pytest table/test_tablemodel_session.py
+# 生成 HTML 测试报告
 pytest --html=report.html
+pytest --html=../reports/report.html
 ```
 
-生成的报告默认位于程序根目录下`test/`中的report.html 文件，需要指定生成位置和文件名可以更改：`--html=[路径][文件名].html`，如`--html=../test-report/report.html`
+### 覆盖率测试
 
-**注意：测试用例文件必须以test结尾，方法必须以test开头**
-
-- 代码覆盖率测试
+覆盖率配置文件位于 `tests/.coveragerc`，用于屏蔽部分不需要的文件的覆盖情况：
 
 ```bash
-cd ${python-client-test}/tests
+# 测试代码中的配置文件路径写法是相对 `tests` 目录的，因此请先进入该目录
+cd tests
+# 执行覆盖率测试并输出报告
 pytest --cov=iotdb --cov-report=html:../cov-report --cov-branch --cov-config=.coveragerc
 ```
 
-生成的报告默认位于程序根目录下`test/htmlcov/`中的index.html 文件，需要指定生成位置可以更改：`--cov-report=html:路径`，如`--cov-report=html:../cov-report`
+常用参数说明：
 
-参数说明
+- `--cov`：指定覆盖率目标包，这里是已安装到当前 Python 环境中的 `iotdb`
+- `--cov-report`：指定报告输出格式和目录
+- `--cov-branch`：启用分支覆盖率统计
+- `--cov-config`：指定覆盖率配置文件，这里对应 `tests/.coveragerc`
 
-- --cov：指定覆盖率测试目标源码目录（会自动取venv依赖库里面的iotdb：Lib\site-packages\iotdb）
-- --cov-report：指定覆盖率报告文件格式
-- --cov-branch：启用分支测试
-- --cov-config：指定覆盖率测试配置文件
+## 开发
+
+如果需要新增 pytest 用例，建议沿用当前仓库的命名方式：
+
+- 测试文件名使用 `test_*.py`
+- 测试函数名使用 `test_*`
