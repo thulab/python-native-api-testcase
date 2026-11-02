@@ -1,0 +1,1068 @@
+{
+  "productId": 1,
+  "defaults": {
+    "caseType": "功能测试",
+    "model": "通用",
+    "owner": "肖林捷",
+    "automationType": "session-python-oss",
+    "executeMethod": "自动"
+  },
+  "cases": [
+    {
+      "target": "table/test_tablemodel_insert.py::test_insert1",
+      "name": "Python 开源｜表模型-写入：测试一般写入数据",
+      "description": "测试一般写入数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-写入"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_insert.py::test_insert2",
+      "name": "Python 开源｜表模型-写入：测试Numpy_tablet写入数据",
+      "description": "测试Numpy_tablet写入数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-写入"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_insert.py::test_insert3",
+      "name": "Python 开源｜表模型-写入：测试直接写入数据",
+      "description": "测试直接写入数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-写入"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_insert.py::test_insert4",
+      "name": "Python 开源｜表模型-写入：乱序写入：测试时间戳自动排序功能",
+      "description": "乱序写入：测试时间戳自动排序功能",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-写入"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_insert.py::test_insert_error1",
+      "name": "Python 开源｜表模型-写入：错误情况：时间戳长度和值长度不一致",
+      "description": "错误情况：时间戳长度和值长度不一致",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-写入"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query1",
+      "name": "Python 开源｜表模型-查询：测试SessionDataSet：验证列类型和数据类型以及行数的正确性",
+      "description": "测试SessionDataSet：验证列类型和数据类型以及行数的正确性",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query2",
+      "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 总行数超过 fetchSize 时",
+      "description": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 总行数超过 fetchSize 时",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query3",
+      "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数小于 fetchSize 时",
+      "description": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数小于 fetchSize 时",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query4",
+      "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数等于 fetchSize 时",
+      "description": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数等于 fetchSize 时",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query5",
+      "name": "Python 开源｜表模型-查询：测试 fetchSize <= 0 的异常：Session 打印一个警告日志 ，fetchSize 重置为默认值 5000",
+      "description": "测试 fetchSize <= 0 的异常：Session 打印一个警告日志 ，fetchSize 重置为默认值 5000",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_fields1",
+      "name": "Python 开源｜表模型-查询：测试fields查询：验证类型",
+      "description": "测试fields查询：验证类型",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_fields2",
+      "name": "Python 开源｜表模型-查询：测试fields查询：验证字段值",
+      "description": "测试fields查询：验证字段值",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_fields3",
+      "name": "Python 开源｜表模型-查询：测试fields查询：测试is_null、copy和set_xxx_value等方法有效性",
+      "description": "测试fields查询：测试is_null、copy和set_xxx_value等方法有效性",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_fields_error1",
+      "name": "Python 开源｜表模型-查询：测试fields查询， get_XXX_valu e异常情况",
+      "description": "测试fields查询， get_XXX_valu e异常情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_query.py::test_query_error1",
+      "name": "Python 开源｜表模型-查询：测试 StatementExecutionException 异常",
+      "description": "测试 StatementExecutionException 异常",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-查询"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session1",
+      "name": "Python 开源｜表模型-会话：测试最简 session 连接：默认url地址为localhost:6667",
+      "description": "测试最简 session 连接：默认url地址为localhost:6667",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session2",
+      "name": "Python 开源｜表模型-会话：测试最全 session 连接：session指定数据库",
+      "description": "测试最全 session 连接：session指定数据库",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session3",
+      "name": "Python 开源｜表模型-会话：测试 enable_redirection 参数：关闭重定向",
+      "description": "测试 enable_redirection 参数：关闭重定向",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session4",
+      "name": "Python 开源｜表模型-会话：测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+      "description": "测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session5",
+      "name": "Python 开源｜表模型-会话：测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+      "description": "测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session6",
+      "name": "Python 开源｜表模型-会话：测试 connection_timeout_in_ms 参数",
+      "description": "测试 connection_timeout_in_ms 参数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session7",
+      "name": "Python 开源｜表模型-会话：测试多次 Close",
+      "description": "测试多次 Close",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session.py::test_session_error1",
+      "name": "Python 开源｜表模型-会话：IoTDBConnectionException异常：未实现",
+      "description": "IoTDBConnectionException异常：未实现",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session1",
+      "name": "Python 开源｜表模型-会话池：测试最简 SessionPool 连接",
+      "description": "测试最简 SessionPool 连接",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session2",
+      "name": "Python 开源｜表模型-会话池：测试最全 session 连接：session指定数据库",
+      "description": "测试最全 session 连接：session指定数据库",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session3",
+      "name": "Python 开源｜表模型-会话池：测试 enable_redirection 参数：关闭重定向",
+      "description": "测试 enable_redirection 参数：关闭重定向",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session4",
+      "name": "Python 开源｜表模型-会话池：测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+      "description": "测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session5",
+      "name": "Python 开源｜表模型-会话池：测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+      "description": "测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session6",
+      "name": "Python 开源｜表模型-会话池：测试 connection_timeout_in_ms 参数",
+      "description": "测试 connection_timeout_in_ms 参数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session8",
+      "name": "Python 开源｜表模型-会话池：测试 max_retry 参数：0, 1, 100, 10000",
+      "description": "测试 max_retry 参数：0, 1, 100, 10000",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "table/test_tablemodel_session_pool.py::test_session9",
+      "name": "Python 开源｜表模型-会话池：测试 max_pool_size 参数：0, 1, 100, 10000",
+      "description": "测试 max_pool_size 参数：0, 1, 100, 10000",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "表模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/表模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_database.py::test_database1",
+      "name": "Python 开源｜树模型-数据库：测试创建数据库：set_storage_group",
+      "description": "测试创建数据库：set_storage_group",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-数据库"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_database.py::test_database2",
+      "name": "Python 开源｜树模型-数据库：测试删除数据库：delete_storage_group 和 delete_storage_groups",
+      "description": "测试删除数据库：delete_storage_group 和 delete_storage_groups",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-数据库"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_database.py::test_database_error1",
+      "name": "Python 开源｜树模型-数据库：测试delete_storage_group异常：未创建连接而执行或执行时session重连",
+      "description": "测试delete_storage_group异常：未创建连接而执行或执行时session重连",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-数据库"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_tablet",
+      "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入一条 tablet 数据",
+      "description": "测试往非对齐时间序列写入一条 tablet 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_tablet",
+      "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入一条 tablet 数据",
+      "description": "测试往对齐时间序列写入一条 tablet 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_tablets",
+      "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入多条 tablet 数据",
+      "description": "测试往非对齐时间序列写入多条 tablet 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_tablets",
+      "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入多条 tablet 数据",
+      "description": "测试往对齐时间序列写入多条 tablet 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_record",
+      "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入一条 Record 数据",
+      "description": "测试往非对齐时间序列写入一条 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_record",
+      "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入一条 Record 数据",
+      "description": "测试往对齐时间序列写入一条 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_records",
+      "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入多条 Record 数据",
+      "description": "测试往非对齐时间序列写入多条 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_records",
+      "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入多条 Record 数据",
+      "description": "测试往对齐时间序列写入多条 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_records_of_one_device",
+      "name": "Python 开源｜树模型-写入：测试插入同属于一个非对齐 device 的多个 Record 数据",
+      "description": "测试插入同属于一个非对齐 device 的多个 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_records_of_one_device",
+      "name": "Python 开源｜树模型-写入：测试插入同属于一个对齐 device 的多个 Record 数据",
+      "description": "测试插入同属于一个对齐 device 的多个 Record 数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_str_record",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：写入单条记录",
+      "description": "测试带有类型推断的写入：写入单条记录",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_str_record",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：写入单条对齐记录",
+      "description": "测试带有类型推断的写入：写入单条对齐记录",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条记录",
+      "description": "测试带有类型推断的写入：往一个设备中写入多条记录",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+      "description": "测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_direct",
+      "name": "Python 开源｜树模型-写入：测试直接写入",
+      "description": "测试直接写入",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_delete_data1",
+      "name": "Python 开源｜树模型-写入：测试删除多个时间序列全部的数据",
+      "description": "测试删除多个时间序列全部的数据",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_delete_data2",
+      "name": "Python 开源｜树模型-写入：测试删除多个时间序列指定范围的数据（删除全部数据）",
+      "description": "测试删除多个时间序列指定范围的数据（删除全部数据）",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_check_sorted",
+      "name": "Python 开源｜树模型-写入：测试检查顺序函数：check_sorted",
+      "description": "测试检查顺序函数：check_sorted",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device_error",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条记录",
+      "description": "测试带有类型推断的写入：往一个设备中写入多条记录",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device_error",
+      "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+      "description": "测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_records_error",
+      "name": "Python 开源｜树模型-写入：测试insert_records数量不一致情况",
+      "description": "测试insert_records数量不一致情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_str_record_error",
+      "name": "Python 开源｜树模型-写入：测试 insert_str_record 数量不一致情况",
+      "description": "测试 insert_str_record 数量不一致情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_insert.py::test_insert_record_error",
+      "name": "Python 开源｜树模型-写入：测试 insert_record 数量不一致情况",
+      "description": "测试 insert_record 数量不一致情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-写入"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_query.py::test_execute_query_statement",
+      "name": "Python 开源｜树模型-查询：测试 execute_query_statement 函数",
+      "description": "测试 execute_query_statement 函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-查询"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_query.py::test_execute_raw_data_query",
+      "name": "Python 开源｜树模型-查询：测试 execute_raw_data_query 函数",
+      "description": "测试 execute_raw_data_query 函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-查询"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_query.py::test_execute_last_data_query",
+      "name": "Python 开源｜树模型-查询：测试 execute_last_data_query 函数",
+      "description": "测试 execute_last_data_query 函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-查询"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session1",
+      "name": "Python 开源｜树模型-会话：测试session连接：最简构造",
+      "description": "测试session连接：最简构造",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session2",
+      "name": "Python 开源｜树模型-会话：测试session连接：最繁构造",
+      "description": "测试session连接：最繁构造",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session3",
+      "name": "Python 开源｜树模型-会话：测试session连接：多次open",
+      "description": "测试session连接：多次open",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session4",
+      "name": "Python 开源｜树模型-会话：测试session连接：多次close",
+      "description": "测试session连接：多次close",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session5",
+      "name": "Python 开源｜树模型-会话：测试session连接：close后再open",
+      "description": "测试session连接：close后再open",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session6",
+      "name": "Python 开源｜树模型-会话：测试超时连接：需要手动测试，不清楚具体多久会超时",
+      "description": "测试超时连接：需要手动测试，不清楚具体多久会超时",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session7",
+      "name": "Python 开源｜树模型-会话：测试Session的SSL连接：需要手动测试，测试时请将use_ssl设置为True，并开启iotdb对应配置",
+      "description": "测试Session的SSL连接：需要手动测试，测试时请将use_ssl设置为True，并开启iotdb对应配置",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session8",
+      "name": "Python 开源｜树模型-会话：测试session的get_time_zone和set_time_zone函数",
+      "description": "测试session的get_time_zone和set_time_zone函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session9",
+      "name": "Python 开源｜树模型-会话：测试session的 execute_statement 函数",
+      "description": "测试session的 execute_statement 函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session10",
+      "name": "Python 开源｜树模型-会话：测试session的 execute_non_query_statement 和 execute_query_statement 函数",
+      "description": "测试session的 execute_non_query_statement 和 execute_query_statement 函数",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session_error2",
+      "name": "Python 开源｜树模型-会话：测试session的 execute_non_query_statement函数异常情况",
+      "description": "测试session的 execute_non_query_statement函数异常情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session_error3",
+      "name": "Python 开源｜树模型-会话：测试session的 execute_query_statement函数异常情况",
+      "description": "测试session的 execute_query_statement函数异常情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session_error4",
+      "name": "Python 开源｜树模型-会话：测试session的 execute_statement函数异常情况",
+      "description": "测试session的 execute_statement函数异常情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session.py::test_session_error5",
+      "name": "Python 开源｜树模型-会话：测试session的set_time_zone函数异常情况",
+      "description": "测试session的set_time_zone函数异常情况",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool1",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：最简构造",
+      "description": "测试session_pool：最简构造",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool2",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：最繁构造",
+      "description": "测试session_pool：最繁构造",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool3",
+      "name": "Python 开源｜树模型-会话池：测试SessionPool的SSL连接",
+      "description": "测试SessionPool的SSL连接",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool4",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：无node_urls",
+      "description": "测试session_pool：无node_urls",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool5",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：push_back的session未open",
+      "description": "测试session_pool：push_back的session未open",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool_error1",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：node_urls为None",
+      "description": "测试session_pool：node_urls为None",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool_error2",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：get_session前关闭session_pool",
+      "description": "测试session_pool：get_session前关闭session_pool",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool_error3",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：put_back的session_pool已经close",
+      "description": "测试session_pool：put_back的session_pool已经close",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_session_pool.py::test_session_pool_error4",
+      "name": "Python 开源｜树模型-会话池：测试session_pool：创建session_pool时，max_pool_size <= 0",
+      "description": "测试session_pool：创建session_pool时，max_pool_size <= 0",
+      "priority": "P2",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-会话池"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_timeseries.py::test_timeseries1",
+      "name": "Python 开源｜树模型-时间序列：测试创建非对齐时间序列：create_time_series",
+      "description": "测试创建非对齐时间序列：create_time_series",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-时间序列"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_timeseries.py::test_aligned_timeseries1",
+      "name": "Python 开源｜树模型-时间序列：测试创建对齐时间序列：create_aligned_time_series",
+      "description": "测试创建对齐时间序列：create_aligned_time_series",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-时间序列"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_timeseries.py::test_multi_timeseries1",
+      "name": "Python 开源｜树模型-时间序列：测试创建多个非对齐时间序列",
+      "description": "测试创建多个非对齐时间序列",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-时间序列"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_timeseries.py::test_delete_timeseries1",
+      "name": "Python 开源｜树模型-时间序列：测试删除时间序列：session.delete_time_series()",
+      "description": "测试删除时间序列：session.delete_time_series()",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-时间序列"
+      ]
+    },
+    {
+      "target": "tree/test_treemodel_timeseries.py::test_check_timeseries_exists1",
+      "name": "Python 开源｜树模型-时间序列：测试检查时间序列是否存在：check_time_series_exists",
+      "description": "测试检查时间序列是否存在：check_time_series_exists",
+      "priority": "P1",
+      "caseType": "功能测试",
+      "model": "树模型",
+      "automationType": "session-python-oss",
+      "featurePaths": [
+        "接口模块/Python 原生接口/树模型-时间序列"
+      ]
+    }
+  ]
+}
