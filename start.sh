@@ -49,6 +49,11 @@ install_client() {
     if "$PYTHON" -c "import iotdb" >/dev/null 2>&1; then
         return 0
     fi
+    # 开源用例不依赖企业版 OBJECT，优先安装与 TimechoDB 2.0.11 对齐的 PyPI 客户端。
+    if "$PYTHON" -m pip install -q "apache-iotdb==${PLM_IOTDB_PYTHON_VERSION:-2.0.11}" \
+        && "$PYTHON" -c "import iotdb" >/dev/null 2>&1; then
+        return 0
+    fi
     if [ -d "$PYTHON_CLIENT" ]; then
         if [ -f "$PYTHON_CLIENT/pyproject.toml" ] || [ -f "$PYTHON_CLIENT/setup.py" ]; then
             "$PYTHON" -m pip install -q "$PYTHON_CLIENT" || return 1
@@ -63,7 +68,7 @@ install_client() {
             rm -rf "$tmp"
         fi
     else
-        "$PYTHON" -m pip install -q apache-iotdb || return 1
+        return 1
     fi
 }
 
