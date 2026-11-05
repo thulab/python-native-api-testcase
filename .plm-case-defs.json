@@ -18,7 +18,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3127",
+      "plmId": 7698
     },
     {
       "target": "table/test_tablemodel_insert.py::test_insert2",
@@ -30,7 +32,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3128",
+      "plmId": 7699
     },
     {
       "target": "table/test_tablemodel_insert.py::test_insert3",
@@ -42,7 +46,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3129",
+      "plmId": 7700
     },
     {
       "target": "table/test_tablemodel_insert.py::test_insert4",
@@ -54,7 +60,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3130",
+      "plmId": 7701
     },
     {
       "target": "table/test_tablemodel_insert.py::test_insert_error1",
@@ -66,7 +74,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3131",
+      "plmId": 7702
     },
     {
       "target": "table/test_tablemodel_query.py::test_query1",
@@ -78,7 +88,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3132",
+      "plmId": 7703
     },
     {
       "target": "table/test_tablemodel_query.py::test_query2",
@@ -90,7 +102,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3133",
+      "plmId": 7704
     },
     {
       "target": "table/test_tablemodel_query.py::test_query3",
@@ -102,7 +116,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3134",
+      "plmId": 7705
     },
     {
       "target": "table/test_tablemodel_query.py::test_query4",
@@ -114,7 +130,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3135",
+      "plmId": 7706
     },
     {
       "target": "table/test_tablemodel_query.py::test_query5",
@@ -126,7 +144,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3136",
+      "plmId": 7707
     },
     {
       "target": "table/test_tablemodel_query.py::test_fields1",
@@ -138,7 +158,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3137",
+      "plmId": 7708
     },
     {
       "target": "table/test_tablemodel_query.py::test_fields2",
@@ -150,7 +172,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3138",
+      "plmId": 7709
     },
     {
       "target": "table/test_tablemodel_query.py::test_fields3",
@@ -162,7 +186,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3139",
+      "plmId": 7710
     },
     {
       "target": "table/test_tablemodel_query.py::test_fields_error1",
@@ -174,7 +200,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3140",
+      "plmId": 7711
     },
     {
       "target": "table/test_tablemodel_query.py::test_query_error1",
@@ -186,7 +214,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3141",
+      "plmId": 7712
     },
     {
       "target": "table/test_tablemodel_session.py::test_session1",
@@ -198,7 +228,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3142",
+      "plmId": 7713
     },
     {
       "target": "table/test_tablemodel_session.py::test_session2",
@@ -210,7 +242,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3143",
+      "plmId": 7714
     },
     {
       "target": "table/test_tablemodel_session.py::test_session3",
@@ -222,7 +256,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3144",
+      "plmId": 7715
     },
     {
       "target": "table/test_tablemodel_session.py::test_session4",
@@ -234,7 +270,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3145",
+      "plmId": 7716
     },
     {
       "target": "table/test_tablemodel_session.py::test_session5",
@@ -246,7 +284,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3146",
+      "plmId": 7717
     },
     {
       "target": "table/test_tablemodel_session.py::test_session6",
@@ -258,7 +298,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3147",
+      "plmId": 7718
     },
     {
       "target": "table/test_tablemodel_session.py::test_session7",
@@ -270,7 +312,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3148",
+      "plmId": 7719
     },
     {
       "target": "table/test_tablemodel_session.py::test_session_error1",
@@ -282,7 +326,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3149",
+      "plmId": 7720
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session1",
@@ -294,7 +340,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3150",
+      "plmId": 7721
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session2",
@@ -306,7 +354,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3151",
+      "plmId": 7722
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session3",
@@ -318,7 +368,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3152",
+      "plmId": 7723
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session4",
@@ -330,7 +382,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3153",
+      "plmId": 7724
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session5",
@@ -342,7 +396,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3154",
+      "plmId": 7725
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session6",
@@ -354,7 +410,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3155",
+      "plmId": 7726
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session8",
@@ -366,7 +424,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3156",
+      "plmId": 7727
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session9",
@@ -378,7 +438,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3157",
+      "plmId": 7728
     },
     {
       "target": "tree/test_treemodel_database.py::test_database1",
@@ -390,7 +452,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3158",
+      "plmId": 7729
     },
     {
       "target": "tree/test_treemodel_database.py::test_database2",
@@ -402,7 +466,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3159",
+      "plmId": 7730
     },
     {
       "target": "tree/test_treemodel_database.py::test_database_error1",
@@ -414,7 +480,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3160",
+      "plmId": 7731
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_tablet",
@@ -426,7 +494,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3161",
+      "plmId": 7732
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_tablet",
@@ -438,7 +508,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3162",
+      "plmId": 7733
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_tablets",
@@ -450,7 +522,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3163",
+      "plmId": 7734
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_tablets",
@@ -462,7 +536,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3164",
+      "plmId": 7735
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_record",
@@ -474,7 +550,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3165",
+      "plmId": 7736
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_record",
@@ -486,7 +564,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3166",
+      "plmId": 7737
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_records",
@@ -498,7 +578,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3167",
+      "plmId": 7738
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_records",
@@ -510,7 +592,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3168",
+      "plmId": 7739
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_records_of_one_device",
@@ -522,7 +606,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3169",
+      "plmId": 7740
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_records_of_one_device",
@@ -534,7 +620,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3170",
+      "plmId": 7741
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_str_record",
@@ -546,7 +634,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3171",
+      "plmId": 7742
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_str_record",
@@ -558,7 +648,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3172",
+      "plmId": 7743
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device",
@@ -570,7 +662,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3173",
+      "plmId": 7744
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device",
@@ -582,7 +676,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3174",
+      "plmId": 7745
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_direct",
@@ -594,7 +690,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3175",
+      "plmId": 7746
     },
     {
       "target": "tree/test_treemodel_insert.py::test_delete_data1",
@@ -606,7 +704,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3176",
+      "plmId": 7747
     },
     {
       "target": "tree/test_treemodel_insert.py::test_delete_data2",
@@ -618,7 +718,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3177",
+      "plmId": 7748
     },
     {
       "target": "tree/test_treemodel_insert.py::test_check_sorted",
@@ -630,7 +732,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3178",
+      "plmId": 7749
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device_error",
@@ -642,7 +746,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3179",
+      "plmId": 7750
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device_error",
@@ -654,7 +760,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3180",
+      "plmId": 7751
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_records_error",
@@ -666,7 +774,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3181",
+      "plmId": 7752
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_str_record_error",
@@ -678,7 +788,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3182",
+      "plmId": 7753
     },
     {
       "target": "tree/test_treemodel_insert.py::test_insert_record_error",
@@ -690,7 +802,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3183",
+      "plmId": 7754
     },
     {
       "target": "tree/test_treemodel_query.py::test_execute_query_statement",
@@ -702,7 +816,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3184",
+      "plmId": 7755
     },
     {
       "target": "tree/test_treemodel_query.py::test_execute_raw_data_query",
@@ -714,7 +830,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3185",
+      "plmId": 7756
     },
     {
       "target": "tree/test_treemodel_query.py::test_execute_last_data_query",
@@ -726,7 +844,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3186",
+      "plmId": 7757
     },
     {
       "target": "tree/test_treemodel_session.py::test_session1",
@@ -738,7 +858,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3187",
+      "plmId": 7758
     },
     {
       "target": "tree/test_treemodel_session.py::test_session2",
@@ -750,7 +872,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3188",
+      "plmId": 7759
     },
     {
       "target": "tree/test_treemodel_session.py::test_session3",
@@ -762,7 +886,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3189",
+      "plmId": 7760
     },
     {
       "target": "tree/test_treemodel_session.py::test_session4",
@@ -774,7 +900,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3190",
+      "plmId": 7761
     },
     {
       "target": "tree/test_treemodel_session.py::test_session5",
@@ -786,7 +914,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3191",
+      "plmId": 7762
     },
     {
       "target": "tree/test_treemodel_session.py::test_session6",
@@ -798,7 +928,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3192",
+      "plmId": 7763
     },
     {
       "target": "tree/test_treemodel_session.py::test_session7",
@@ -810,7 +942,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3193",
+      "plmId": 7764
     },
     {
       "target": "tree/test_treemodel_session.py::test_session8",
@@ -822,7 +956,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3194",
+      "plmId": 7765
     },
     {
       "target": "tree/test_treemodel_session.py::test_session9",
@@ -834,7 +970,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3195",
+      "plmId": 7766
     },
     {
       "target": "tree/test_treemodel_session.py::test_session10",
@@ -846,7 +984,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3196",
+      "plmId": 7767
     },
     {
       "target": "tree/test_treemodel_session.py::test_session_error2",
@@ -858,7 +998,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3197",
+      "plmId": 7768
     },
     {
       "target": "tree/test_treemodel_session.py::test_session_error3",
@@ -870,7 +1012,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3198",
+      "plmId": 7769
     },
     {
       "target": "tree/test_treemodel_session.py::test_session_error4",
@@ -882,7 +1026,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3199",
+      "plmId": 7770
     },
     {
       "target": "tree/test_treemodel_session.py::test_session_error5",
@@ -894,7 +1040,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3200",
+      "plmId": 7771
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool1",
@@ -906,7 +1054,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3201",
+      "plmId": 7772
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool2",
@@ -918,7 +1068,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3202",
+      "plmId": 7773
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool3",
@@ -930,7 +1082,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3203",
+      "plmId": 7774
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool4",
@@ -942,7 +1096,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3204",
+      "plmId": 7775
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool5",
@@ -954,7 +1110,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3205",
+      "plmId": 7776
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool_error1",
@@ -966,7 +1124,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3206",
+      "plmId": 7777
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool_error2",
@@ -978,7 +1138,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3207",
+      "plmId": 7778
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool_error3",
@@ -990,7 +1152,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3208",
+      "plmId": 7779
     },
     {
       "target": "tree/test_treemodel_session_pool.py::test_session_pool_error4",
@@ -1002,7 +1166,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3209",
+      "plmId": 7780
     },
     {
       "target": "tree/test_treemodel_timeseries.py::test_timeseries1",
@@ -1014,7 +1180,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3210",
+      "plmId": 7781
     },
     {
       "target": "tree/test_treemodel_timeseries.py::test_aligned_timeseries1",
@@ -1026,7 +1194,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3211",
+      "plmId": 7782
     },
     {
       "target": "tree/test_treemodel_timeseries.py::test_multi_timeseries1",
@@ -1038,7 +1208,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3212",
+      "plmId": 7783
     },
     {
       "target": "tree/test_treemodel_timeseries.py::test_delete_timeseries1",
@@ -1050,7 +1222,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3213",
+      "plmId": 7784
     },
     {
       "target": "tree/test_treemodel_timeseries.py::test_check_timeseries_exists1",
@@ -1062,7 +1236,9 @@
       "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
-      ]
+      ],
+      "plmCaseId": "TimechoDB-3214",
+      "plmId": 7785
     }
   ]
 }

@@ -1,0 +1,530 @@
+{
+  "TimechoDB-3127": {
+    "name": "Python 开源｜表模型-写入：测试一般写入数据",
+    "nodeId": "table/test_tablemodel_insert.py::test_insert1",
+    "plmDescription": "测试一般写入数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3128": {
+    "name": "Python 开源｜表模型-写入：测试Numpy_tablet写入数据",
+    "nodeId": "table/test_tablemodel_insert.py::test_insert2",
+    "plmDescription": "测试Numpy_tablet写入数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3129": {
+    "name": "Python 开源｜表模型-写入：测试直接写入数据",
+    "nodeId": "table/test_tablemodel_insert.py::test_insert3",
+    "plmDescription": "测试直接写入数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3130": {
+    "name": "Python 开源｜表模型-写入：乱序写入：测试时间戳自动排序功能",
+    "nodeId": "table/test_tablemodel_insert.py::test_insert4",
+    "plmDescription": "乱序写入：测试时间戳自动排序功能",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3131": {
+    "name": "Python 开源｜表模型-写入：错误情况：时间戳长度和值长度不一致",
+    "nodeId": "table/test_tablemodel_insert.py::test_insert_error1",
+    "plmDescription": "错误情况：时间戳长度和值长度不一致",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3132": {
+    "name": "Python 开源｜表模型-查询：测试SessionDataSet：验证列类型和数据类型以及行数的正确性",
+    "nodeId": "table/test_tablemodel_query.py::test_query1",
+    "plmDescription": "测试SessionDataSet：验证列类型和数据类型以及行数的正确性",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3133": {
+    "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 总行数超过 fetchSize 时",
+    "nodeId": "table/test_tablemodel_query.py::test_query2",
+    "plmDescription": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 总行数超过 fetchSize 时",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3134": {
+    "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数小于 fetchSize 时",
+    "nodeId": "table/test_tablemodel_query.py::test_query3",
+    "plmDescription": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数小于 fetchSize 时",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3135": {
+    "name": "Python 开源｜表模型-查询：测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数等于 fetchSize 时",
+    "nodeId": "table/test_tablemodel_query.py::test_query4",
+    "plmDescription": "测试查询分批返回 DataFrame 功能：当 SessionDataSet 剩余的行数等于 fetchSize 时",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3136": {
+    "name": "Python 开源｜表模型-查询：测试 fetchSize <= 0 的异常：Session 打印一个警告日志 ，fetchSize 重置为默认值 5000",
+    "nodeId": "table/test_tablemodel_query.py::test_query5",
+    "plmDescription": "测试 fetchSize <= 0 的异常：Session 打印一个警告日志 ，fetchSize 重置为默认值 5000",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3137": {
+    "name": "Python 开源｜表模型-查询：测试fields查询：验证类型",
+    "nodeId": "table/test_tablemodel_query.py::test_fields1",
+    "plmDescription": "测试fields查询：验证类型",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3138": {
+    "name": "Python 开源｜表模型-查询：测试fields查询：验证字段值",
+    "nodeId": "table/test_tablemodel_query.py::test_fields2",
+    "plmDescription": "测试fields查询：验证字段值",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3139": {
+    "name": "Python 开源｜表模型-查询：测试fields查询：测试is_null、copy和set_xxx_value等方法有效性",
+    "nodeId": "table/test_tablemodel_query.py::test_fields3",
+    "plmDescription": "测试fields查询：测试is_null、copy和set_xxx_value等方法有效性",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3140": {
+    "name": "Python 开源｜表模型-查询：测试fields查询， get_XXX_valu e异常情况",
+    "nodeId": "table/test_tablemodel_query.py::test_fields_error1",
+    "plmDescription": "测试fields查询， get_XXX_valu e异常情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3141": {
+    "name": "Python 开源｜表模型-查询：测试 StatementExecutionException 异常",
+    "nodeId": "table/test_tablemodel_query.py::test_query_error1",
+    "plmDescription": "测试 StatementExecutionException 异常",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3142": {
+    "name": "Python 开源｜表模型-会话：测试最简 session 连接：默认url地址为localhost:6667",
+    "nodeId": "table/test_tablemodel_session.py::test_session1",
+    "plmDescription": "测试最简 session 连接：默认url地址为localhost:6667",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3143": {
+    "name": "Python 开源｜表模型-会话：测试最全 session 连接：session指定数据库",
+    "nodeId": "table/test_tablemodel_session.py::test_session2",
+    "plmDescription": "测试最全 session 连接：session指定数据库",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3144": {
+    "name": "Python 开源｜表模型-会话：测试 enable_redirection 参数：关闭重定向",
+    "nodeId": "table/test_tablemodel_session.py::test_session3",
+    "plmDescription": "测试 enable_redirection 参数：关闭重定向",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3145": {
+    "name": "Python 开源｜表模型-会话：测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+    "nodeId": "table/test_tablemodel_session.py::test_session4",
+    "plmDescription": "测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3146": {
+    "name": "Python 开源｜表模型-会话：测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+    "nodeId": "table/test_tablemodel_session.py::test_session5",
+    "plmDescription": "测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3147": {
+    "name": "Python 开源｜表模型-会话：测试 connection_timeout_in_ms 参数",
+    "nodeId": "table/test_tablemodel_session.py::test_session6",
+    "plmDescription": "测试 connection_timeout_in_ms 参数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3148": {
+    "name": "Python 开源｜表模型-会话：测试多次 Close",
+    "nodeId": "table/test_tablemodel_session.py::test_session7",
+    "plmDescription": "测试多次 Close",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3149": {
+    "name": "Python 开源｜表模型-会话：IoTDBConnectionException异常：未实现",
+    "nodeId": "table/test_tablemodel_session.py::test_session_error1",
+    "plmDescription": "IoTDBConnectionException异常：未实现",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3150": {
+    "name": "Python 开源｜表模型-会话池：最简 session_pool 连接（node_urls + 显式凭据）",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session1",
+    "plmDescription": "测试最简 session_pool 连接路径：node_urls 来自配置，凭据显式传入（PLM TimechoDB 默认口令非 root/root）。",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3151": {
+    "name": "Python 开源｜表模型-会话池：测试最全 session 连接：session指定数据库",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session2",
+    "plmDescription": "测试最全 session 连接：session指定数据库",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3152": {
+    "name": "Python 开源｜表模型-会话池：测试 enable_redirection 参数：关闭重定向",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session3",
+    "plmDescription": "测试 enable_redirection 参数：关闭重定向",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3153": {
+    "name": "Python 开源｜表模型-会话池：测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session4",
+    "plmDescription": "测试 enable_compression 参数：开启RPC压缩（需要单独测试，IoTDB需要开启对应配置）",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3154": {
+    "name": "Python 开源｜表模型-会话池：测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session5",
+    "plmDescription": "测试 use_ssl 参数：开启SSL连接（需要单独测试，生成并存放密钥）",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3155": {
+    "name": "Python 开源｜表模型-会话池：测试 connection_timeout_in_ms 参数",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session6",
+    "plmDescription": "测试 connection_timeout_in_ms 参数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3156": {
+    "name": "Python 开源｜表模型-会话池：测试 max_retry 参数：0, 1, 100, 10000",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session8",
+    "plmDescription": "测试 max_retry 参数：0, 1, 100, 10000",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3157": {
+    "name": "Python 开源｜表模型-会话池：测试 max_pool_size 参数：0, 1, 100, 10000",
+    "nodeId": "table/test_tablemodel_session_pool.py::test_session9",
+    "plmDescription": "测试 max_pool_size 参数：0, 1, 100, 10000",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3158": {
+    "name": "Python 开源｜树模型-数据库：测试创建数据库：set_storage_group",
+    "nodeId": "tree/test_treemodel_database.py::test_database1",
+    "plmDescription": "测试创建数据库：set_storage_group",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3159": {
+    "name": "Python 开源｜树模型-数据库：测试删除数据库：delete_storage_group 和 delete_storage_groups",
+    "nodeId": "tree/test_treemodel_database.py::test_database2",
+    "plmDescription": "测试删除数据库：delete_storage_group 和 delete_storage_groups",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3160": {
+    "name": "Python 开源｜树模型-数据库：测试delete_storage_group异常：未创建连接而执行或执行时session重连",
+    "nodeId": "tree/test_treemodel_database.py::test_database_error1",
+    "plmDescription": "测试delete_storage_group异常：未创建连接而执行或执行时session重连",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3161": {
+    "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入一条 tablet 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_tablet",
+    "plmDescription": "测试往非对齐时间序列写入一条 tablet 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3162": {
+    "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入一条 tablet 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_tablet",
+    "plmDescription": "测试往对齐时间序列写入一条 tablet 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3163": {
+    "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入多条 tablet 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_tablets",
+    "plmDescription": "测试往非对齐时间序列写入多条 tablet 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3164": {
+    "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入多条 tablet 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_tablets",
+    "plmDescription": "测试往对齐时间序列写入多条 tablet 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3165": {
+    "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入一条 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_record",
+    "plmDescription": "测试往非对齐时间序列写入一条 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3166": {
+    "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入一条 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_record",
+    "plmDescription": "测试往对齐时间序列写入一条 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3167": {
+    "name": "Python 开源｜树模型-写入：测试往非对齐时间序列写入多条 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_records",
+    "plmDescription": "测试往非对齐时间序列写入多条 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3168": {
+    "name": "Python 开源｜树模型-写入：测试往对齐时间序列写入多条 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_records",
+    "plmDescription": "测试往对齐时间序列写入多条 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3169": {
+    "name": "Python 开源｜树模型-写入：测试插入同属于一个非对齐 device 的多个 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_records_of_one_device",
+    "plmDescription": "测试插入同属于一个非对齐 device 的多个 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3170": {
+    "name": "Python 开源｜树模型-写入：测试插入同属于一个对齐 device 的多个 Record 数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_records_of_one_device",
+    "plmDescription": "测试插入同属于一个对齐 device 的多个 Record 数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3171": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：写入单条记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_str_record",
+    "plmDescription": "测试带有类型推断的写入：写入单条记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3172": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：写入单条对齐记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_str_record",
+    "plmDescription": "测试带有类型推断的写入：写入单条对齐记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3173": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device",
+    "plmDescription": "测试带有类型推断的写入：往一个设备中写入多条记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3174": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device",
+    "plmDescription": "测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3175": {
+    "name": "Python 开源｜树模型-写入：测试直接写入",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_direct",
+    "plmDescription": "测试直接写入",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3176": {
+    "name": "Python 开源｜树模型-写入：测试删除多个时间序列全部的数据",
+    "nodeId": "tree/test_treemodel_insert.py::test_delete_data1",
+    "plmDescription": "测试删除多个时间序列全部的数据",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3177": {
+    "name": "Python 开源｜树模型-写入：测试删除多个时间序列指定范围的数据（删除全部数据）",
+    "nodeId": "tree/test_treemodel_insert.py::test_delete_data2",
+    "plmDescription": "测试删除多个时间序列指定范围的数据（删除全部数据）",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3178": {
+    "name": "Python 开源｜树模型-写入：测试检查顺序函数：check_sorted",
+    "nodeId": "tree/test_treemodel_insert.py::test_check_sorted",
+    "plmDescription": "测试检查顺序函数：check_sorted",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3179": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_string_records_of_one_device_error",
+    "plmDescription": "测试带有类型推断的写入：往一个设备中写入多条记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3180": {
+    "name": "Python 开源｜树模型-写入：测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_aligned_string_records_of_one_device_error",
+    "plmDescription": "测试带有类型推断的写入：往一个设备中写入多条对齐记录",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3181": {
+    "name": "Python 开源｜树模型-写入：测试insert_records数量不一致情况",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_records_error",
+    "plmDescription": "测试insert_records数量不一致情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3182": {
+    "name": "Python 开源｜树模型-写入：测试 insert_str_record 数量不一致情况",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_str_record_error",
+    "plmDescription": "测试 insert_str_record 数量不一致情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3183": {
+    "name": "Python 开源｜树模型-写入：测试 insert_record 数量不一致情况",
+    "nodeId": "tree/test_treemodel_insert.py::test_insert_record_error",
+    "plmDescription": "测试 insert_record 数量不一致情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3184": {
+    "name": "Python 开源｜树模型-查询：测试 execute_query_statement 函数",
+    "nodeId": "tree/test_treemodel_query.py::test_execute_query_statement",
+    "plmDescription": "测试 execute_query_statement 函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3185": {
+    "name": "Python 开源｜树模型-查询：测试 execute_raw_data_query 函数",
+    "nodeId": "tree/test_treemodel_query.py::test_execute_raw_data_query",
+    "plmDescription": "测试 execute_raw_data_query 函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3186": {
+    "name": "Python 开源｜树模型-查询：测试 execute_last_data_query 函数",
+    "nodeId": "tree/test_treemodel_query.py::test_execute_last_data_query",
+    "plmDescription": "测试 execute_last_data_query 函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3187": {
+    "name": "Python 开源｜树模型-会话：最简 session 连接（host/port + 显式凭据）",
+    "nodeId": "tree/test_treemodel_session.py::test_session1",
+    "plmDescription": "测试最简 session 连接路径：host/port 来自配置，凭据显式传入（PLM TimechoDB 默认口令非 root/root）。",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3188": {
+    "name": "Python 开源｜树模型-会话：测试session连接：最繁构造",
+    "nodeId": "tree/test_treemodel_session.py::test_session2",
+    "plmDescription": "测试session连接：最繁构造",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3189": {
+    "name": "Python 开源｜树模型-会话：测试session连接：多次open",
+    "nodeId": "tree/test_treemodel_session.py::test_session3",
+    "plmDescription": "测试session连接：多次open",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3190": {
+    "name": "Python 开源｜树模型-会话：测试session连接：多次close",
+    "nodeId": "tree/test_treemodel_session.py::test_session4",
+    "plmDescription": "测试session连接：多次close",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3191": {
+    "name": "Python 开源｜树模型-会话：测试session连接：close后再open",
+    "nodeId": "tree/test_treemodel_session.py::test_session5",
+    "plmDescription": "测试session连接：close后再open",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3192": {
+    "name": "Python 开源｜树模型-会话：测试超时连接：需要手动测试，不清楚具体多久会超时",
+    "nodeId": "tree/test_treemodel_session.py::test_session6",
+    "plmDescription": "测试超时连接：需要手动测试，不清楚具体多久会超时",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3193": {
+    "name": "Python 开源｜树模型-会话：测试Session的SSL连接：需要手动测试，测试时请将use_ssl设置为True，并开启iotdb对应配置",
+    "nodeId": "tree/test_treemodel_session.py::test_session7",
+    "plmDescription": "测试Session的SSL连接：需要手动测试，测试时请将use_ssl设置为True，并开启iotdb对应配置",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3194": {
+    "name": "Python 开源｜树模型-会话：测试session的get_time_zone和set_time_zone函数",
+    "nodeId": "tree/test_treemodel_session.py::test_session8",
+    "plmDescription": "测试session的get_time_zone和set_time_zone函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3195": {
+    "name": "Python 开源｜树模型-会话：测试session的 execute_statement 函数",
+    "nodeId": "tree/test_treemodel_session.py::test_session9",
+    "plmDescription": "测试session的 execute_statement 函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3196": {
+    "name": "Python 开源｜树模型-会话：测试session的 execute_non_query_statement 和 execute_query_statement 函数",
+    "nodeId": "tree/test_treemodel_session.py::test_session10",
+    "plmDescription": "测试session的 execute_non_query_statement 和 execute_query_statement 函数",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3197": {
+    "name": "Python 开源｜树模型-会话：测试session的 execute_non_query_statement函数异常情况",
+    "nodeId": "tree/test_treemodel_session.py::test_session_error2",
+    "plmDescription": "测试session的 execute_non_query_statement函数异常情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3198": {
+    "name": "Python 开源｜树模型-会话：测试session的 execute_query_statement函数异常情况",
+    "nodeId": "tree/test_treemodel_session.py::test_session_error3",
+    "plmDescription": "测试session的 execute_query_statement函数异常情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3199": {
+    "name": "Python 开源｜树模型-会话：测试session的 execute_statement函数异常情况",
+    "nodeId": "tree/test_treemodel_session.py::test_session_error4",
+    "plmDescription": "测试session的 execute_statement函数异常情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3200": {
+    "name": "Python 开源｜树模型-会话：测试session的set_time_zone函数异常情况",
+    "nodeId": "tree/test_treemodel_session.py::test_session_error5",
+    "plmDescription": "测试session的set_time_zone函数异常情况",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3201": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：最简构造",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool1",
+    "plmDescription": "测试session_pool：最简构造",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3202": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：最繁构造",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool2",
+    "plmDescription": "测试session_pool：最繁构造",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3203": {
+    "name": "Python 开源｜树模型-会话池：测试SessionPool的SSL连接",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool3",
+    "plmDescription": "测试SessionPool的SSL连接",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3204": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：无node_urls",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool4",
+    "plmDescription": "测试session_pool：无node_urls",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3205": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：push_back的session未open",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool5",
+    "plmDescription": "测试session_pool：push_back的session未open",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3206": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：node_urls为None",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool_error1",
+    "plmDescription": "测试session_pool：node_urls为None",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3207": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：get_session前关闭session_pool",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool_error2",
+    "plmDescription": "测试session_pool：get_session前关闭session_pool",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3208": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：put_back的session_pool已经close",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool_error3",
+    "plmDescription": "测试session_pool：put_back的session_pool已经close",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3209": {
+    "name": "Python 开源｜树模型-会话池：测试session_pool：创建session_pool时，max_pool_size <= 0",
+    "nodeId": "tree/test_treemodel_session_pool.py::test_session_pool_error4",
+    "plmDescription": "测试session_pool：创建session_pool时，max_pool_size <= 0",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3210": {
+    "name": "Python 开源｜树模型-时间序列：测试创建非对齐时间序列：create_time_series",
+    "nodeId": "tree/test_treemodel_timeseries.py::test_timeseries1",
+    "plmDescription": "测试创建非对齐时间序列：create_time_series",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3211": {
+    "name": "Python 开源｜树模型-时间序列：测试创建对齐时间序列：create_aligned_time_series",
+    "nodeId": "tree/test_treemodel_timeseries.py::test_aligned_timeseries1",
+    "plmDescription": "测试创建对齐时间序列：create_aligned_time_series",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3212": {
+    "name": "Python 开源｜树模型-时间序列：测试创建多个非对齐时间序列",
+    "nodeId": "tree/test_treemodel_timeseries.py::test_multi_timeseries1",
+    "plmDescription": "测试创建多个非对齐时间序列",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3213": {
+    "name": "Python 开源｜树模型-时间序列：测试删除时间序列：session.delete_time_series()",
+    "nodeId": "tree/test_treemodel_timeseries.py::test_delete_timeseries1",
+    "plmDescription": "测试删除时间序列：session.delete_time_series()",
+    "automationType": "session-python"
+  },
+  "TimechoDB-3214": {
+    "name": "Python 开源｜树模型-时间序列：测试检查时间序列是否存在：check_time_series_exists",
+    "nodeId": "tree/test_treemodel_timeseries.py::test_check_timeseries_exists1",
+    "plmDescription": "测试检查时间序列是否存在：check_time_series_exists",
+    "automationType": "session-python"
+  }
+}
