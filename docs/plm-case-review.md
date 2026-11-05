@@ -108,3 +108,9 @@
 - 本轮无命名分歧；如后续发现用例名与测试内容不符，在本文件追加“待审查”记录。
 - 环境差异记录：111 为开源版默认 root/root；PLM 的 TimechoDB 实例默认口令为 TimechoDB@2021。`tree/test_treemodel_session.py::test_session1` 原用 2 参构造（默认 root/root）会 801，已改为显式传 config 凭据，用例名同步改为“最简 session 连接（host/port + 显式凭据）”；`table/test_tablemodel_session_pool.py::test_session1` 同理改为显式传 node_urls/凭据。
 
+## 三、PLM 环境验证（2026-11-05）
+
+- **8GB 手动实例**（`py-large-test`，TimechoDB 2.0.10.2，192.168.99.51:30891）：88 条全量 **88 passed in 742.91s**。
+- **2GB Native 模板实例**：`test_query5` 报 `719: There is not enough memory...`（剩余 31MB，需要 37MB）；树模型插入用例出现连接中断。
+- 结论：Python 全量需要把产品 Native 模板实例内存提高到 **8GB（至少 6GB）** 并重新检验；2GB 仅够轻量用例。
+- 此前失败的 11 条（`test_query5`、`table/test_tablemodel_session_pool.py::test_session1`、树模型插入 9 条）在 8GB 实例上全部通过。
