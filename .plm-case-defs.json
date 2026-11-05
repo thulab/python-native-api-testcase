@@ -4,7 +4,7 @@
     "caseType": "功能测试",
     "model": "通用",
     "owner": "肖林捷",
-    "automationType": "session-python-oss",
+    "automationType": "session-python",
     "executeMethod": "自动"
   },
   "cases": [
@@ -15,7 +15,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
       ]
@@ -27,7 +27,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
       ]
@@ -39,7 +39,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
       ]
@@ -51,7 +51,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
       ]
@@ -63,7 +63,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-写入"
       ]
@@ -75,7 +75,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -87,7 +87,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -99,7 +99,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -111,7 +111,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -123,7 +123,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -135,7 +135,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -147,7 +147,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -159,7 +159,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -171,7 +171,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -183,7 +183,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-查询"
       ]
@@ -195,7 +195,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -207,7 +207,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -219,7 +219,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -231,7 +231,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -243,7 +243,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -255,7 +255,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -267,7 +267,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -279,7 +279,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话"
       ]
@@ -291,7 +291,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -303,7 +303,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -315,7 +315,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -327,7 +327,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -339,7 +339,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -351,7 +351,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -363,7 +363,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -375,7 +375,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/表模型-会话池"
       ]
@@ -387,7 +387,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
       ]
@@ -399,7 +399,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
       ]
@@ -411,7 +411,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-数据库"
       ]
@@ -423,7 +423,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -435,7 +435,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -447,7 +447,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -459,7 +459,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -471,7 +471,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -483,7 +483,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -495,7 +495,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -507,7 +507,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -519,7 +519,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -531,7 +531,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -543,7 +543,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -555,7 +555,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -567,7 +567,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -579,7 +579,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -591,7 +591,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -603,7 +603,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -615,7 +615,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -627,7 +627,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -639,7 +639,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -651,7 +651,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -663,7 +663,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -675,7 +675,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -687,7 +687,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-写入"
       ]
@@ -699,7 +699,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
       ]
@@ -711,7 +711,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
       ]
@@ -723,19 +723,19 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-查询"
       ]
     },
     {
       "target": "tree/test_treemodel_session.py::test_session1",
-      "name": "Python 开源｜树模型-会话：测试session连接：最简构造",
-      "description": "测试session连接：最简构造",
+      "name": "Python 开源｜树模型-会话：最简 session 连接（host/port + 显式凭据）",
+      "description": "测试最简 session 连接路径：host/port 来自配置，凭据显式传入（PLM TimechoDB 默认口令非 root/root）。",
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -747,7 +747,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -759,7 +759,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -771,7 +771,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -783,7 +783,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -795,7 +795,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -807,7 +807,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -819,7 +819,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -831,7 +831,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -843,7 +843,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -855,7 +855,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -867,7 +867,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -879,7 +879,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -891,7 +891,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话"
       ]
@@ -903,7 +903,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -915,7 +915,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -927,7 +927,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -939,7 +939,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -951,7 +951,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -963,7 +963,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -975,7 +975,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -987,7 +987,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -999,7 +999,7 @@
       "priority": "P2",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-会话池"
       ]
@@ -1011,7 +1011,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
       ]
@@ -1023,7 +1023,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
       ]
@@ -1035,7 +1035,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
       ]
@@ -1047,7 +1047,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
       ]
@@ -1059,7 +1059,7 @@
       "priority": "P1",
       "caseType": "功能测试",
       "model": "树模型",
-      "automationType": "session-python-oss",
+      "automationType": "session-python",
       "featurePaths": [
         "接口模块/Python 原生接口/树模型-时间序列"
       ]

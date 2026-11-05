@@ -16,7 +16,7 @@ REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 1
 cd "$REPO_ROOT" || exit 1
 
 REPORTS_DIR="${PLM_REPORT_DIR:-reports}"
-AUTOMATION_TYPE="${PLM_AUTOMATION_TYPE:-session-python-oss}"
+AUTOMATION_TYPE="${PLM_AUTOMATION_TYPE:-session-python}"
 VENV="$REPO_ROOT/.venv"
 PYTHON="${PYTHON:-$VENV/bin/python}"
 PYTHON_CLIENT="${PLM_IOTDB_PYTHON_CLIENT:-/root/test-program/timechodb-src/iotdb-client/client-py}"

@@ -143,6 +143,8 @@ def test_session1():
     session = Session(
         config['host'],
         config['port'],
+        config['username'],
+        config['password'],
     )
     session.open(False)
     check_session_validity1(session)
