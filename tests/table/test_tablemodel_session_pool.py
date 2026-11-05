@@ -167,7 +167,13 @@ def fixture_():
 # 1、测试最简 SessionPool 连接
 @pytest.mark.usefixtures('fixture_')
 def test_session1():
-    config = TableSessionPoolConfig()
+    with open(config_path, 'r', encoding='utf-8') as file:
+        cfg = yaml.safe_load(file)
+    config = TableSessionPoolConfig(
+        node_urls=cfg['node_urls'],
+        username=cfg['username'],
+        password=cfg['password'],
+    )
     session_pool = TableSessionPool(config)
     session = session_pool.get_session()
     check_session_validity1(session)

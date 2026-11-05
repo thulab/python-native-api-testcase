@@ -286,8 +286,8 @@
     },
     {
       "target": "table/test_tablemodel_session_pool.py::test_session1",
-      "name": "Python 开源｜表模型-会话池：测试最简 SessionPool 连接",
-      "description": "测试最简 SessionPool 连接",
+      "name": "Python 开源｜表模型-会话池：最简 session_pool 连接（node_urls + 显式凭据）",
+      "description": "测试最简 session_pool 连接路径：node_urls 来自配置，凭据显式传入（PLM TimechoDB 默认口令非 root/root）。",
       "priority": "P1",
       "caseType": "功能测试",
       "model": "表模型",

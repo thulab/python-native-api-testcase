@@ -106,5 +106,5 @@
 - 111 报告 88/88 通过，作为基线。
 - 依赖版本：111 为 Python 3.10 + numpy 1.25.2 / pandas 2.0.3 / greenlet 2.0.2；76 为 Python 3.12，上述版本无 cp312 wheel，改用兼容的 numpy 1.26.4 / pandas 2.1.4 / greenlet 3.0.3，并以 88 条实跑结果为准。客户端 apache-iotdb 2.0.11（PLM 分支默认）。
 - 本轮无命名分歧；如后续发现用例名与测试内容不符，在本文件追加“待审查”记录。
-- 环境差异记录：111 为开源版默认 root/root；PLM 的 TimechoDB 实例默认口令为 TimechoDB@2021。`tree/test_treemodel_session.py::test_session1` 原用 2 参构造（默认 root/root）会 801，已改为显式传 config 凭据，用例名同步改为“最简 session 连接（host/port + 显式凭据）”。
+- 环境差异记录：111 为开源版默认 root/root；PLM 的 TimechoDB 实例默认口令为 TimechoDB@2021。`tree/test_treemodel_session.py::test_session1` 原用 2 参构造（默认 root/root）会 801，已改为显式传 config 凭据，用例名同步改为“最简 session 连接（host/port + 显式凭据）”；`table/test_tablemodel_session_pool.py::test_session1` 同理改为显式传 node_urls/凭据。
 
